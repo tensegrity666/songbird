@@ -1,5 +1,5 @@
 FROM node:12-alpine
-WORKDIR /songbird
+WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY public public
