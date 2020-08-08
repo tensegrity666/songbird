@@ -1,8 +1,19 @@
 import React from 'react';
-import style from './index.module.css';
+
+import Header from '../header';
+import Categories from '../categories';
+import Quiz from '../quiz';
+
+// import styles from './index.module.css';
 
 const App = () => {
-  return <div className={style.app}>hello world</div>;
+  return (
+    <>
+      <Header />
+      <Categories />
+      <Quiz />
+    </>
+  );
 };
 
 export default App;
