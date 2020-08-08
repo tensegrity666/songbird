@@ -9,6 +9,7 @@
     "@testing-library/react": "^10.4.8",
     "@testing-library/user-event": "^12.1.0",
     "nanoid": "^3.1.12",
+    "netlify-cli": "^2.59.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -21,7 +22,8 @@
     "eject": "react-scripts eject",
     "prettier": "prettier src/ --write",
     "lint": "npm run prettier && eslint src/**/*.js --fix && stylelint src/**/*.css --syntax css --fix",
-    "release": "standard-version"
+    "release": "standard-version",
+    "deploy": "npm run build && netlify deploy --prod"
   },
   "eslintConfig": {
     "extends": "react-app"
