@@ -1,0 +1,13 @@
+.playerContayner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.playerElement {
+  width: 100%;
+}
+
+.wrapper {
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
