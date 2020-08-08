@@ -6,7 +6,7 @@ const Info = () => {
   return (
     <div className="card border-secondary col-12 col-md-6">
       <img alt="jouravl" />
-      <div className="card-header">jouravl</div>
+      <div className="card-header">TEST</div>
       <div className="card-body">
         <h4 className="card-title">Grus grus</h4>
         <div>audio</div>
