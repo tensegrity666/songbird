@@ -4,9 +4,7 @@ class XenoCantoApi {
   async getData(req) {
     this.req = req;
 
-    const res = await fetch(
-      `http://localhost:${process.env.PORT}/query/${this.req}`
-    );
+    const res = await fetch(`http://localhost:8000/query/${this.req}`);
     const data = await res.json();
 
     return data;

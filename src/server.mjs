@@ -6,7 +6,7 @@ const app = express();
 app.get('/query/:request', (req, res) => {
   const { request } = req.params;
 
-  app.use(express.static('static'));
+  app.use(express.static('build'));
 
   fetch(`https://www.xeno-canto.org/api/2/recordings?query=${request}`)
     .then((response) => response.json())
@@ -17,4 +17,4 @@ app.get('/query/:request', (req, res) => {
     });
 });
 
-app.listen(process.env.PORT || 8000, () => console.log(`listen port ${process.env.PORT}`));
+app.listen(process.env.PORT || 8000);
