@@ -2,6 +2,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 
 const app = express();
+const port = process.env.PORT || 8000;
 
 app.get('/query/:request', (req, res) => {
   const { request } = req.params;
@@ -17,4 +18,4 @@ app.get('/query/:request', (req, res) => {
     });
 });
 
-app.listen(process.env.PORT || 8000);
+app.listen(port);
