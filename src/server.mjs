@@ -7,13 +7,15 @@ const port = 8000;
 app.get('/query/:request', (req, res) => {
   const { request } = req.params;
 
+  // app.use(express.static('static'));
+
   fetch(`https://www.xeno-canto.org/api/2/recordings?query=${request}`)
     .then((response) => response.json())
     .then((data) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Headers', '*');
       res.send(data);
-    })
+    });
 });
 
-app.listen(port, () => console.log(`listen port ${port}`))
+app.listen(process.env.PORT || port, () => console.log(`listen port ${port}`));
