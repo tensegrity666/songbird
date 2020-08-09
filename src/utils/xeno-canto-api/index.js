@@ -1,12 +1,10 @@
 class XenoCantoApi {
-  apiBase = 'https://www.xeno-canto.org/api/2/recordings?query=goose';
+  noCors = 'https://cors-anywhere.herokuapp.com/';
+
+  apiBase = 'www.xeno-canto.org/api/2/recordings?query=';
 
   async getData(req) {
-    const port = process.env.PORT || 8000;
-
-    this.req = req;
-
-    const res = await fetch(`http://localhost:${port}/query/${this.req}`);
+    const res = await fetch(`${this.noCors}${this.apiBase}${req}`);
     const data = await res.json();
 
     return data;
