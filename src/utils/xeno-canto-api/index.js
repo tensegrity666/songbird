@@ -1,13 +1,27 @@
+/* eslint-disable class-methods-use-this */
+
+import { noCors, apiBase, page } from './constants';
+
 class XenoCantoApi {
-  noCors = 'https://cors-anywhere.herokuapp.com/';
-
-  apiBase = 'www.xeno-canto.org/api/2/recordings?query=';
-
   async getData(req) {
-    const res = await fetch(`${this.noCors}${this.apiBase}${req}`);
+    const res = await fetch(`${noCors}${apiBase}${req}${page}`);
     const data = await res.json();
 
-    return data;
+    const transformedData = this.transformData(data);
+
+    return transformedData;
+  }
+
+  transformData(data) {
+    const source = data.recordings[0];
+    const { en, gen, sp, file, id } = source;
+
+    return {
+      id,
+      name: en,
+      latinName: `${gen} ${sp}`,
+      audioURL: file,
+    };
   }
 }
 

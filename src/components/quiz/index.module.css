@@ -3,4 +3,9 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.button {
+  box-shadow: 0 15px 25px -5px #000000bf;
 }

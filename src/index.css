@@ -33,6 +33,19 @@
   --font-family-monospace: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.page {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("./components/app/assets/54.jpg");
+  background-size: initial;
+  background-repeat: repeat;
+}
+
+#root {
+  backdrop-filter: brightness(3) blur(2px);
+
+}
+
 *,
 *::before,
 *::after {

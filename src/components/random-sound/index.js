@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './index.module.css';
 
-const SoundPlayer = () => {
+const RandomSound = () => {
   const { playerContayner, playerElement, wrapper } = styles;
 
   return (
@@ -20,4 +20,4 @@ const SoundPlayer = () => {
   );
 };
 
-export default SoundPlayer;
+export default RandomSound;
