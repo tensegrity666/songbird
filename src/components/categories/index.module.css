@@ -2,4 +2,5 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  box-shadow: 0 10px 35px 0 #000000bf;
 }
