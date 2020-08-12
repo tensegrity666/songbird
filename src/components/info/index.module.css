@@ -1,8 +1,42 @@
 .infoBlock {
-  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  min-height: 367px;
+  padding: 0.5rem;
   box-shadow: 0 15px 25px -5px #000000bf;
 }
 
 .soundPlayer {
   width: 100%;
+}
+
+.image {
+  align-self: flex-start;
+  justify-self: center;
+  object-fit: cover;
+  object-position: center;
+  width: 400px;
+  height: 350px;
+}
+
+.container {
+  display: flex;
+}
+
+.containerInner {
+  padding: 0.5rem 1rem;
+}
+
+.cardInner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  min-height: 340px;
+  padding: 0;
+}
+
+.paragraph {
+  text-align: justify;
 }
