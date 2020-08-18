@@ -1,7 +1,8 @@
 .infoBlock {
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  align-content: center;
+  justify-content: center;
   min-height: 367px;
   padding: 0.5rem;
   box-shadow: 0 15px 25px -5px #000000bf;
@@ -9,6 +10,7 @@
 
 .soundPlayer {
   width: 100%;
+  margin-bottom: 0.5rem;
 }
 
 .image {
@@ -31,12 +33,15 @@
 .cardInner {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
   min-height: 340px;
   padding: 0;
 }
 
 .paragraph {
   text-align: justify;
+}
+
+.title {
+  margin: 1.5rem 0;
 }

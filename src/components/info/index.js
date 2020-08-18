@@ -1,64 +1,47 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/state-in-constructor */
 
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import XenoCantoApi from '../../utils/xeno-canto-api';
-
-import { getInfo } from '../../data';
+import ErrorMessage from '../error-message';
+import Spinner from '../spinner';
 
 import styles from './index.module.css';
 
-class Info extends Component {
-  xenoCantoApi = new XenoCantoApi();
+const Info = ({ info }) => {
+  const {
+    infoBlock,
+    soundPlayer,
+    image,
+    container,
+    cardInner,
+    containerInner,
+    paragraph,
+    title,
+  } = styles;
 
-  state = {
-    name: '',
-    latinName: '',
-    audioURL: '',
-    link: '',
-    description: '',
-  };
+  const {
+    nameEn,
+    latinName,
+    audioURL,
+    description,
+    link,
+    name,
+    error,
+    isLoading,
+  } = info;
 
-  componentDidMount() {
-    this.updateAudio();
-    this.updateInfo(0);
-  }
+  const errorMessage = error ? <ErrorMessage /> : null;
 
-  updateAudio() {
-    this.xenoCantoApi.getData('goose').then((audio) =>
-      this.setState({
-        name: audio.name,
-        latinName: audio.latinName,
-        audioURL: audio.audioURL,
-      })
-    );
-  }
-
-  updateInfo(id) {
-    const info = getInfo(id, 5);
-    const { link, description } = info;
-    this.setState({
-      link,
-      description,
-    });
-  }
-
-  render() {
-    const { name, latinName, audioURL, description, link } = this.state;
-    const {
-      infoBlock,
-      soundPlayer,
-      image,
-      container,
-      cardInner,
-      containerInner,
-      paragraph,
-    } = styles;
-
-    return (
-      <div
-        className={`card border-secondary col-12 col-sm-12 col-md-9 ${infoBlock}`}>
+  return (
+    <div
+      className={`card border-secondary col-12 col-sm-12 col-md-9 ${infoBlock}`}>
+      {errorMessage}
+      {isLoading ? (
+        <Spinner />
+      ) : (
         <div className={container}>
           <img
             className={`${image}`}
@@ -69,15 +52,37 @@ class Info extends Component {
           <div className={`card-body ${cardInner}`}>
             <h3 className="card-header">{name}</h3>
             <div className={containerInner}>
-              <h5 className="card-title">{latinName}</h5>
+              <div className={`card-title ${title}`}>
+                {nameEn} / {latinName}
+              </div>
               <audio className={soundPlayer} src={audioURL} controls />
               <p className={`card-text ${paragraph}`}>{description}</p>
             </div>
           </div>
         </div>
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+  );
+};
+
+Info.propTypes = {
+  info: PropTypes.object,
+  nameEn: PropTypes.string,
+  latinName: PropTypes.string,
+  audioURL: PropTypes.string,
+  description: PropTypes.string,
+  link: PropTypes.string,
+  name: PropTypes.string,
+};
+
+Info.defaultProps = {
+  info: {},
+  nameEn: '',
+  latinName: '',
+  audioURL: '',
+  description: '',
+  link: '',
+  name: '',
+};
 
 export default Info;
