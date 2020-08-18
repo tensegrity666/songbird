@@ -23,16 +23,20 @@ class Quiz extends Component {
     audioURL: '',
     link: '',
     description: '',
+    species: '',
   };
 
-  componentDidMount() {
-    this.updateAudio();
-    this.updateInfo(0);
+  async componentDidMount() {
+    await this.updateInfo(0);
+
+    const { species } = this.state;
+
+    this.updateAudio(species);
   }
 
-  updateAudio = () => {
+  updateAudio = (requestText) => {
     this.xenoCantoApi
-      .getData('Grus grus')
+      .getData(requestText)
       .then((audio) =>
         this.setState({
           nameEn: audio.nameEn,
@@ -47,15 +51,15 @@ class Quiz extends Component {
   updateInfo = (categoryIndex, birdID) => {
     const info = getInfo(categoryIndex, birdID);
 
-    const { link, description, name } = info;
+    const { link, description, name, species } = info;
 
-    console.log(info[birdID]);
-
-    this.setState({
+    this.setState((state) => ({
+      ...state,
       link,
       description,
       name,
-    });
+      species,
+    }));
   };
 
   onError = () => {
