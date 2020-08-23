@@ -10,3 +10,9 @@
   margin-bottom: 5rem;
   box-shadow: 0 15px 25px -5px #000000bf;
 }
+
+.answersButtons {
+  width: 100%;
+  font-weight: 600;
+  text-align: start;
+}

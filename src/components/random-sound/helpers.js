@@ -4,4 +4,8 @@ const randomInteger = (min, max) => {
   return Math.floor(rand);
 };
 
-export default randomInteger;
+const hideName = (name) => {
+  return name.replace(/./gm, '⚹');
+};
+
+export { randomInteger, hideName };
