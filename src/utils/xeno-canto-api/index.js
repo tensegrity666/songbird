@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable prefer-destructuring */
 
 import { noCors, apiBase, page } from './constants';
@@ -13,12 +14,11 @@ class XenoCantoApi {
   }
 
   transformData(data) {
-    this.source = data.recordings[0];
-    const { en, gen, sp, file, id } = this.source;
+    const { en, gen, sp, file, id } = data.recordings[0];
 
     return {
       id,
-      name: en,
+      nameEn: en,
       latinName: `${gen} ${sp}`,
       audioURL: file,
     };

@@ -7,7 +7,7 @@ import { getArrayOfNames } from '../../data';
 
 const Answers = () => {
   const { answers, transparentize, button } = styles;
-  const names = getArrayOfNames(2);
+  const names = getArrayOfNames(0);
 
   const buttons = names.map((name) => {
     return (

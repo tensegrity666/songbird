@@ -307,18 +307,31 @@ const birdsData = [
 ];
 
 const getArrayOfNames = (categoryIndex = 0) => {
-  const values = birdsData[categoryIndex].map((el) => {
+  const result = birdsData[categoryIndex].map((el) => {
     return Object.values(el)[1];
   });
 
-  return values;
+  return result;
 };
 
-const getInfo = (categoryIndex = 0, id = 1) => {
-  const element = birdsData[categoryIndex].filter((el) => el.id === id);
-  const info = element[0];
+const getInfo = (index = 0, id = 0) => {
+  const result = birdsData[index].map((bird) => {
+    return {
+      id: Object.values(bird)[0],
+      name: Object.values(bird)[1],
+      link: Object.values(bird)[2],
+      species: Object.values(bird)[3],
+    };
+  });
 
-  return info;
+  return result[id];
 };
+
+// const getInfo = (categoryIndex = 0, id = 1) => {
+//   const element = birdsData[categoryIndex].filter((el) => el.id === id);
+//   const info = element[0];
+
+//   return info;
+// };
 
 export { birdsData as default, getArrayOfNames, getInfo };

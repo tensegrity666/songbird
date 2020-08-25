@@ -12,3 +12,10 @@
   margin: 1rem 0 2rem;
   box-shadow: 0 15px 25px -5px #000000bf;
 }
+
+.image {
+  object-fit: cover;
+  object-position: center;
+  width: 200px;
+  height: 160px;
+}

@@ -1,0 +1,6 @@
+.error {
+  width: 100%;
+  color: var(--warning);
+  text-align: center;
+  transform: translateY(150px);
+}
