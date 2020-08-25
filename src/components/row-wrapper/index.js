@@ -92,29 +92,29 @@ class RowWrapper extends Component {
     });
   };
 
-  onAnswer = (event) => {
-    const { isCorrect, isLoading } = this.state;
-    const { answersButtons } = styles;
+  // onAnswer = (event) => {
+  //   const { isCorrect, isLoading } = this.state;
+  //   const { answersButtons } = styles;
 
-    if (isLoading) {
-      return;
-    }
+  //   if (isLoading) {
+  //     return;
+  //   }
 
-    const randomSoundId = document.querySelector('#randomSound').dataset.random;
-    const checkedAnswerId = event.target.dataset.index;
+  //   const randomSoundId = document.querySelector('#randomSound').dataset.random;
+  //   const checkedAnswerId = event.target.dataset.index;
 
-    if (randomSoundId === checkedAnswerId) {
-      this.setState({
-        isCorrect: true,
-      });
+  //   if (randomSoundId === checkedAnswerId) {
+  //     this.setState({
+  //       isCorrect: true,
+  //     });
 
-      this.unlockNextLevelButton();
-    }
+  //     this.unlockNextLevelButton();
+  //   }
 
-    event.target.className = isCorrect
-      ? `btn btn-success ${answersButtons}`
-      : `btn btn-danger ${answersButtons}`;
-  };
+  //   event.target.className = isCorrect
+  //     ? `btn btn-success ${answersButtons}`
+  //     : `btn btn-danger ${answersButtons}`;
+  // };
 
   render() {
     const { answersWrapper, button } = styles;
@@ -128,7 +128,6 @@ class RowWrapper extends Component {
             selectedBird={selectedBird}
             isChecked={isChecked}
             isCorrect={isCorrect}
-            onAnswer={this.onAnswer}
             categoryIndex={categoryIndex}
           />
           <Details

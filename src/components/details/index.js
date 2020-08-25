@@ -29,6 +29,10 @@ class Details extends Component {
       return;
     }
 
+    this.setState({
+      isLoading: true,
+    });
+
     this.xenoCantoApi
       .getData(details.species)
       .then((audio) =>
@@ -57,12 +61,12 @@ class Details extends Component {
   render() {
     const { infoBlock } = styles;
 
-    const { isLoading, selectedBird, details } = this.props;
+    const { selectedBird, details } = this.props;
 
     return (
       <div
         className={`card border-secondary col-12 col-sm-12 col-md-12 col-lg-9 ${infoBlock}`}>
-        {isLoading ? (
+        {details.isLoading ? (
           <Spinner />
         ) : (
           <InfoInner details={details} selectedBird={selectedBird} />

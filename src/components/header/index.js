@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ScoreCounter from '../score-counter';
-
 import styles from './index.module.css';
+import store from '../../redux/store';
 
-const Header = ({ score }) => {
+const Header = () => {
   const { header, logo } = styles;
+  const { score } = store.getState();
 
   return (
     <header className={`navbar navbar-expand-lg bg-light ${header}`}>
@@ -14,14 +14,6 @@ const Header = ({ score }) => {
       <ScoreCounter score={score} />
     </header>
   );
-};
-
-Header.propTypes = {
-  score: PropTypes.number,
-};
-
-Header.defaultProps = {
-  score: 0,
 };
 
 export default Header;

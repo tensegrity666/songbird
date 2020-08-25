@@ -3,15 +3,21 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 import styles from './index.module.css';
-
 import { getArrayOfNames } from '../../data';
+import store from '../../redux/store';
+import * as actions from '../../redux/actions';
+import toggleClassName from './utils';
 
-const Answers = ({ onAnswer, categoryIndex, selectedBird }) => {
+const Answers = ({ categoryIndex, selectedBird }) => {
   const { answers, transparentize, button } = styles;
+
+  const { dispatch } = store;
+  const { disable, enable } = bindActionCreators(actions, dispatch);
+
   const [namesList, setNamesList] = useState(getArrayOfNames(categoryIndex));
-  const [bird, setBird] = useState(selectedBird);
 
   const buttons = namesList.map((name, index) => {
     return (
@@ -23,8 +29,7 @@ const Answers = ({ onAnswer, categoryIndex, selectedBird }) => {
           data-index={index}
           className={`btn btn-info ${button}`}
           onClick={(event) => {
-            setBird(index);
-            onAnswer(event);
+            toggleClassName(event);
           }}>
           {name}
         </button>
@@ -40,7 +45,6 @@ const Answers = ({ onAnswer, categoryIndex, selectedBird }) => {
 };
 
 Answers.propTypes = {
-  onAnswer: PropTypes.func.isRequired,
   categoryIndex: PropTypes.number.isRequired,
   selectedBird: PropTypes.number,
 };
