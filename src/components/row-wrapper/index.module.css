@@ -16,3 +16,9 @@
   font-weight: 600;
   text-align: start;
 }
+
+@media (min-width: 320px) and (max-width: 1000px) {
+  .answersWrapper {
+    flex-direction: column;
+  }
+}
