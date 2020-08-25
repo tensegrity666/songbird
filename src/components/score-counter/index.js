@@ -1,20 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+import store from '../../store';
 import styles from './index.module.css';
 
-const ScoreCounter = ({ score }) => {
+const ScoreCounter = () => {
   const { scoreBar } = styles;
 
+  const { score } = store.getState();
+
   return <span className={scoreBar}>Score: {score}</span>;
-};
-
-ScoreCounter.propTypes = {
-  score: PropTypes.number,
-};
-
-ScoreCounter.defaultProps = {
-  score: 0,
 };
 
 export default ScoreCounter;

@@ -1,4 +1,4 @@
-import actionTypes from './constants';
+import actionTypes from '../constants';
 
 const { DISABLE_BTN, ENABLE_BTN } = actionTypes;
 

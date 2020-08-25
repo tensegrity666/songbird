@@ -1,5 +1,5 @@
-import actionTypes from './constants';
-import initialState from './initial-state';
+import actionTypes from '../constants';
+import initialState from '../initial-state';
 
 const { DISABLE_BTN, ENABLE_BTN } = actionTypes;
 

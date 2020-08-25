@@ -4,11 +4,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-
-import './index.css';
+import store from './store';
 
 import App from './components/app';
-import store from './redux/store';
+import './index.css';
 
 render(
   <React.StrictMode>

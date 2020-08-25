@@ -2,7 +2,7 @@
 /* eslint-disable react/state-in-constructor */
 
 import React, { Component } from 'react';
-import XenoCantoApi from '../../utils/xeno-canto-api';
+import XenoCantoApi from '../../services/xeno-canto-api';
 import Spinner from '../spinner';
 import ErrorMessage from '../error-message';
 import PlayerContainer from './player-container';

@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 
 import styles from './index.module.css';
 import { getArrayOfNames } from '../../data';
-import store from '../../redux/store';
+import store from '../../store';
 import * as actions from '../../redux/actions';
 import toggleClassName from './utils';
 

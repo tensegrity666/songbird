@@ -1,4 +1,4 @@
-import store from '../../redux/store';
+import store from '../../store';
 
 const toggleClassName = (event) => {
   const { isButtonDisabled, isContentLoading } = store.getState();
