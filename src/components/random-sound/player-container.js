@@ -10,8 +10,12 @@ const PlayerContainer = ({ errorText, inner }) => {
 };
 
 PlayerContainer.propTypes = {
-  errorText: PropTypes.string.isRequired,
+  errorText: PropTypes.string,
   inner: PropTypes.element.isRequired,
+};
+
+PlayerContainer.defaultProps = {
+  errorText: '',
 };
 
 export default PlayerContainer;
