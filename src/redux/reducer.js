@@ -3,15 +3,18 @@ import initialState from './initial-state';
 
 const { DISABLE_BTN, ENABLE_BTN } = actionTypes;
 
-const reducer = (state = initialState, { type, payload }) => {
+const reducer = (state = initialState, { type }) => {
   switch (type) {
     case DISABLE_BTN:
-      return state + 1;
+      return {
+        ...state,
+        isButtonDisabled: true,
+      };
 
     case ENABLE_BTN:
       return {
         ...state,
-        value: payload,
+        isButtonDisabled: false,
       };
 
     default:
