@@ -11,6 +11,19 @@
 .soundPlayer {
   width: 100%;
   margin-bottom: 0.5rem;
+  outline-color: #5f9ea042;
+}
+
+.soundPlayer::-webkit-media-controls-panel {
+  background-color: #46b7da2d;
+}
+
+.soundPlayer::-webkit-media-controls-timeline {
+  filter: blur(1px);
+}
+
+.soundPlayer::-webkit-media-controls-play-button:active {
+  filter: blur(1px);
 }
 
 .image {

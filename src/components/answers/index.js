@@ -1,20 +1,27 @@
-import React from 'react';
-import { nanoid } from 'nanoid';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
+
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './index.module.css';
 
 import { getArrayOfNames } from '../../data';
 
-const Answers = () => {
+const Answers = ({ onAnswer, categoryIndex }) => {
   const { answers, transparentize, button } = styles;
-  const names = getArrayOfNames(0);
+  const [namesList, setNamesList] = useState(getArrayOfNames(categoryIndex));
 
-  const buttons = names.map((name) => {
+  const buttons = namesList.map((name, index) => {
     return (
       <li
-        key={nanoid()}
+        key={`answer${index}`}
         className={`list-group-item d-flex justify-content-between align-items-center ${transparentize}`}>
-        <button type="button" className={`btn btn-info ${button}`}>
+        <button
+          type="button"
+          data-index={index}
+          className={`btn btn-info ${button}`}
+          onClick={(event) => onAnswer(event)}>
           {name}
         </button>
       </li>
@@ -22,6 +29,11 @@ const Answers = () => {
   });
 
   return <ul className={`list-group col-12 col-md-3 ${answers}`}>{buttons}</ul>;
+};
+
+Answers.propTypes = {
+  onAnswer: PropTypes.func.isRequired,
+  categoryIndex: PropTypes.number.isRequired,
 };
 
 export default Answers;

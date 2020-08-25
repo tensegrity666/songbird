@@ -13,7 +13,8 @@ const Categories = () => {
         key={CATEGORIES.indexOf(category)}
         type="button"
         className="btn btn-lg btn-success"
-        data-id={`cat${CATEGORIES.indexOf(category)}`}>
+        data-id={`cat${CATEGORIES.indexOf(category)}`}
+        disabled>
         {category}
       </button>
     );

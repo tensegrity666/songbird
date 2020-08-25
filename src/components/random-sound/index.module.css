@@ -42,28 +42,5 @@
 }
 
 .audioPlayer::-webkit-media-controls-play-button:active {
-  filter: blur(3px);
+  filter: blur(1px);
 }
-
-/*
-.audioPlayer::-webkit-media-controls-timeline-container
-
-.audioPlayer::-webkit-media-controls-current-time-display
-
-.audioPlayer::-webkit-media-controls-time-remaining-display
-
-
-
-.audioPlayer::-webkit-media-controls-volume-slider-container
-
-.audioPlayer::-webkit-media-controls-volume-slider
-
-.audioPlayer::-webkit-media-controls-seek-back-button
-
-.audioPlayer::-webkit-media-controls-seek-forward-button
-
-.audioPlayer::-webkit-media-controls-rewind-button
-
-.audioPlayer::-webkit-media-controls-return-to-realtime-button
-
-.audioPlayer::-webkit-media-controls-toggle-closed-captions-button */
