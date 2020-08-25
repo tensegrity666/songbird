@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import Answers from '../answers';
 import Details from '../details';
 
-import XenoCantoApi from '../../utils/xeno-canto-api';
+import XenoCantoApi from '../../services/xeno-canto-api';
 import { getInfo } from '../../data';
 
 import styles from './index.module.css';

@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
+/* eslint-disable no-console */
 
+import React from 'react';
+
+import XenoCantoApi from '../../services/xeno-canto-api';
+
+import WinMessage from '../win-message';
 import Header from '../header';
 import Categories from '../categories';
 import RandomSound from '../random-sound';
 import RowWrapper from '../row-wrapper';
 
-const App = () => {
-  const [isFinished] = useState(false);
-  const [isGuessed] = useState(false);
-  const [currentCategory] = useState(0);
-  const [selectedBird] = useState(null);
+import store from '../../store';
 
-  const Congrats = () => <p>Вы победили</p>;
+const App = () => {
+  const { questionID, rusName, latinName, audioURL } = new XenoCantoApi();
+  console.log(questionID, rusName, latinName, audioURL);
+
+  const { isGameFinished } = store.getState();
 
   return (
     <>
-      {isFinished ? (
-        <Congrats />
+      {isGameFinished ? (
+        <WinMessage />
       ) : (
         <>
           <Header />
-          <Categories currentCategory={currentCategory} />
+          <Categories />
           <RandomSound />
-          <RowWrapper isGuessed={isGuessed} selectedBird={selectedBird} />
+          <RowWrapper />
         </>
       )}
     </>

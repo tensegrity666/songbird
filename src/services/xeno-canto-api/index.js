@@ -17,8 +17,8 @@ class XenoCantoApi {
     const { en, gen, sp, file, id } = data.recordings[0];
 
     return {
-      id,
-      nameEn: en,
+      questionID: id,
+      rusName: en,
       latinName: `${gen} ${sp}`,
       audioURL: file,
     };

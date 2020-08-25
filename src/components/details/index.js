@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import XenoCantoApi from '../../utils/xeno-canto-api';
+import XenoCantoApi from '../../services/xeno-canto-api';
 import { getInfo } from '../../data';
 import Spinner from '../spinner';
 import InfoInner from './info-inner';
