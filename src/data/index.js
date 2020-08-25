@@ -321,17 +321,11 @@ const getInfo = (index = 0, id = 0) => {
       name: Object.values(bird)[1],
       link: Object.values(bird)[2],
       species: Object.values(bird)[3],
+      description: Object.values(bird)[4],
     };
   });
 
   return result[id];
 };
-
-// const getInfo = (categoryIndex = 0, id = 1) => {
-//   const element = birdsData[categoryIndex].filter((el) => el.id === id);
-//   const info = element[0];
-
-//   return info;
-// };
 
 export { birdsData as default, getArrayOfNames, getInfo };

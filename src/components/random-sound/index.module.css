@@ -1,6 +1,6 @@
 .playerContayner {
   display: flex;
-  justify-content: space-between;
+  width: 100%;
 }
 
 .playerElement {
@@ -8,6 +8,10 @@
 }
 
 .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 224px;
   padding: 2rem;
   margin: 1rem 0 2rem;
   box-shadow: 0 15px 25px -5px #000000bf;
@@ -19,3 +23,47 @@
   width: 200px;
   height: 160px;
 }
+
+.playerOuter {
+  padding-top: 1.7rem;
+}
+
+.audioPlayer {
+  width: 100%;
+  outline-color: #5f9ea042;
+}
+
+.audioPlayer::-webkit-media-controls-panel {
+  background-color: white;
+}
+
+.audioPlayer::-webkit-media-controls-timeline {
+  filter: blur(1px);
+}
+
+.audioPlayer::-webkit-media-controls-play-button:active {
+  filter: blur(3px);
+}
+
+/*
+.audioPlayer::-webkit-media-controls-timeline-container
+
+.audioPlayer::-webkit-media-controls-current-time-display
+
+.audioPlayer::-webkit-media-controls-time-remaining-display
+
+
+
+.audioPlayer::-webkit-media-controls-volume-slider-container
+
+.audioPlayer::-webkit-media-controls-volume-slider
+
+.audioPlayer::-webkit-media-controls-seek-back-button
+
+.audioPlayer::-webkit-media-controls-seek-forward-button
+
+.audioPlayer::-webkit-media-controls-rewind-button
+
+.audioPlayer::-webkit-media-controls-return-to-realtime-button
+
+.audioPlayer::-webkit-media-controls-toggle-closed-captions-button */

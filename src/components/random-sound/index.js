@@ -48,7 +48,14 @@ class RandomSound extends Component {
   render() {
     const { audioURL, isLoading, isGuessed } = this.state;
     const { link, name } = this.info;
-    const { playerContayner, playerElement, wrapper, image } = styles;
+    const {
+      playerContayner,
+      playerElement,
+      wrapper,
+      image,
+      audioPlayer,
+      playerOuter,
+    } = styles;
 
     return (
       <div className={`jumbotron ${wrapper}`}>
@@ -61,8 +68,13 @@ class RandomSound extends Component {
               <h4 className="card-header">
                 {isGuessed ? name : this.hideName(name)}
               </h4>
-              <div className="card-body">
-                <audio src={audioURL} controls />
+              <div className={`card-body ${playerOuter}`}>
+                <audio
+                  className={audioPlayer}
+                  src={audioURL}
+                  preload="auto"
+                  controls
+                />
               </div>
             </div>
           </div>
