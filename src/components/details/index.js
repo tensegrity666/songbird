@@ -1,116 +1,76 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/prefer-stateless-function */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/state-in-constructor */
 
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import ErrorMessage from '../error-message';
-import Spinner from '../spinner';
 
 import XenoCantoApi from '../../utils/xeno-canto-api';
 import { getInfo } from '../../data';
-
+import Spinner from '../spinner';
+import InfoInner from './info-inner';
 import styles from './index.module.css';
 
-const Details = ({ details }) => {
-  const {
-    infoBlock,
-    soundPlayer,
-    image,
-    container,
-    cardInner,
-    containerInner,
-    paragraph,
-    title,
-  } = styles;
+class Details extends Component {
+  xenoCantoApi = new XenoCantoApi();
 
-  const {
-    nameEn,
-    latinName,
-    audioURL,
-    description,
-    link,
-    name,
-    error,
-    isLoading,
-  } = details;
+  componentDidMount() {
+    this.updateBird();
+  }
 
-  const [birdInfo, setbirdInfo] = useState({});
+  updateBird() {
+    const { details, onError } = this.props;
 
-  const onError = () => {
-    setbirdInfo({
-      error: true,
-      isLoading: false,
-    });
-  };
-
-  const updateAudio = () => {
-    const xenoCantoApi = new XenoCantoApi();
-
-    const { species } = details;
-
-    if (!species) {
+    if (details.birdID) {
       return;
     }
 
-    xenoCantoApi
-      .getData(species)
+    this.xenoCantoApi
+      .getData(details.species)
       .then((audio) =>
-        setbirdInfo({
+        this.setState({
+          currentBirdID: audio.id,
           nameEn: audio.nameEn,
           latinName: audio.latinName,
           audioURL: audio.audioURL,
           isLoading: false,
         })
       )
-      .catch(onError);
-  };
+      .catch(onError());
 
-  const updateInfo = (categoryIndex, birdID) => {
-    const newInfo = getInfo(categoryIndex, birdID);
+    const info = getInfo(details.categoryIndex, details.birdID);
+    const { link, description, name, species } = info;
 
-    setbirdInfo({
-      ...birdInfo,
-      ...newInfo,
-    });
-  };
+    this.setState((state) => ({
+      ...state,
+      link,
+      description,
+      name,
+      species,
+    }));
+  }
 
-  const errorMessage = error ? <ErrorMessage /> : null;
+  render() {
+    const { infoBlock } = styles;
 
-  const infoInner = (
-    <div className={container}>
-      <img
-        className={`${image}`}
-        src={`${process.env.PUBLIC_URL}${link}`}
-        alt={name}
-        width="400"
-      />
-      <div className={`card-body ${cardInner}`}>
-        <h3 className="card-header">{name}</h3>
-        <div className={containerInner}>
-          {errorMessage || (
-            <>
-              <div className={`card-title ${title}`}>
-                {nameEn} / {latinName}
-              </div>
-              <audio className={soundPlayer} src={audioURL} controls />
-            </>
-          )}
-          <p className={`card-text ${paragraph}`}>{description}</p>
-        </div>
+    const { isLoading, selectedBird, details } = this.props;
+
+    return (
+      <div
+        className={`card border-secondary col-12 col-sm-12 col-md-12 col-lg-9 ${infoBlock}`}>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <InfoInner details={details} selectedBird={selectedBird} />
+        )}
       </div>
-    </div>
-  );
-
-  return (
-    <div
-      className={`card border-secondary col-12 col-sm-12 col-md-9 ${infoBlock}`}>
-      {isLoading ? <Spinner /> : infoInner}
-    </div>
-  );
-};
+    );
+  }
+}
 
 Details.propTypes = {
   details: PropTypes.object,

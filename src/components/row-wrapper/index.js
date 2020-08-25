@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/state-in-constructor */
 
 import React, { Component } from 'react';
 
-import RandomSound from '../random-sound';
 import Answers from '../answers';
 import Details from '../details';
 
@@ -21,6 +21,7 @@ class RowWrapper extends Component {
     error: false,
     isCorrect: false,
     categoryIndex: 0,
+    birdID: 1,
     name: '',
     nameEn: '',
     latinName: '',
@@ -68,10 +69,11 @@ class RowWrapper extends Component {
       .catch(this.onError);
   };
 
-  updateInfo = (categoryIndex, birdID) => {
-    const info = getInfo(categoryIndex, birdID);
+  updateInfo = (categoryIndex) => {
+    const info = getInfo(categoryIndex);
 
     const { link, description, name, species } = info;
+    const { selectedBird } = this.props;
 
     this.setState((state) => ({
       ...state,
@@ -79,6 +81,7 @@ class RowWrapper extends Component {
       description,
       name,
       species,
+      birdID: selectedBird,
     }));
   };
 
@@ -115,18 +118,24 @@ class RowWrapper extends Component {
 
   render() {
     const { answersWrapper, button } = styles;
-    const { error, isCorrect, isChecked } = this.state;
+    const { isCorrect, isChecked, categoryIndex } = this.state;
+    const { selectedBird } = this.props;
 
     return (
       <>
-        <RandomSound error={error} />
         <div className={answersWrapper}>
           <Answers
+            selectedBird={selectedBird}
             isChecked={isChecked}
             isCorrect={isCorrect}
             onAnswer={this.onAnswer}
+            categoryIndex={categoryIndex}
           />
-          <Details details={this.state} />
+          <Details
+            details={this.state}
+            selectedBird={selectedBird}
+            onError={this.onError}
+          />
         </div>
         <button
           type="button"
