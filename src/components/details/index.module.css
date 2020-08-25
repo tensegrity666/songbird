@@ -3,7 +3,6 @@
   display: flex;
   align-content: center;
   justify-content: center;
-  min-height: 367px;
   padding: 0.5rem;
   box-shadow: 0 15px 25px -5px #000000bf;
 }
@@ -37,6 +36,7 @@
 
 .container {
   display: flex;
+  min-height: 390px;
 }
 
 .containerInner {
@@ -57,4 +57,16 @@
 
 .title {
   margin: 1.5rem 0;
+}
+
+@media (min-width: 320px) and (max-width: 460px) {
+  .image {
+    width: 100%;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
 }

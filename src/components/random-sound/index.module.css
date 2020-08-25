@@ -44,3 +44,14 @@
 .audioPlayer::-webkit-media-controls-play-button:active {
   filter: blur(1px);
 }
+
+@media (min-width: 320px) and (max-width: 768px) {
+  .playerContayner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image {
+    width: 100%;
+  }
+}
