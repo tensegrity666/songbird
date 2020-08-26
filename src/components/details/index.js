@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/forbid-prop-types */
@@ -16,11 +17,13 @@ const Details = ({ details, onError, selectedBird }) => {
   const { infoBlock } = styles;
   const xenoCantoApi = new XenoCantoApi();
 
-  const [birdDetails, setBirdDetails] = useState({
+  const [birdAudio, setBirdAudio] = useState({
     isLoading: true,
   });
 
-  const updateBird = () => {
+  const [birdDetails, setBirdDetails] = useState({});
+
+  const updateBirdAudio = () => {
     if (!details.birdID) {
       return;
     }
@@ -28,7 +31,7 @@ const Details = ({ details, onError, selectedBird }) => {
     xenoCantoApi
       .getData(details.species)
       .then((audio) =>
-        setBirdDetails({
+        setBirdAudio({
           currentBirdID: audio.id,
           nameEn: audio.nameEn,
           latinName: audio.latinName,
@@ -37,7 +40,9 @@ const Details = ({ details, onError, selectedBird }) => {
         })
       )
       .catch(onError());
+  };
 
+  const updateBirdDetails = () => {
     const info = getInfo(details.categoryIndex, details.birdID);
     const { link, description, name, species } = info;
 
@@ -52,8 +57,9 @@ const Details = ({ details, onError, selectedBird }) => {
   };
 
   useEffect(() => {
-    updateBird();
-  });
+    updateBirdDetails();
+    console.log(birdDetails);
+  }, [birdDetails, updateBirdDetails]);
 
   return (
     <div

@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/state-in-constructor */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import Answers from '../answers';
 import Details from '../details';
@@ -81,15 +82,15 @@ const RowWrapper = ({ selectedBird }) => {
     }));
   };
 
-  useEffect(() => {
-    const { categoryIndex } = mainInfo;
+  // useEffect(() => {
+  //   const { categoryIndex } = mainInfo;
 
-    updateInfo(categoryIndex);
+  //   updateInfo(categoryIndex);
 
-    const { species } = mainInfo;
+  //   const { species } = mainInfo;
 
-    updateAudio(species);
-  });
+  //   updateAudio(species);
+  // }, [updateInfo, mainInfo, updateAudio]);
 
   const onAnswer = (event) => {
     const { isLoading } = mainInfo;
@@ -108,6 +109,7 @@ const RowWrapper = ({ selectedBird }) => {
       });
 
       unlockNextLevelButton();
+      // eslint-disable-next-line no-console
       console.log('true!');
     }
 
