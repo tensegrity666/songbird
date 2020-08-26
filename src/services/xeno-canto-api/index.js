@@ -9,7 +9,6 @@ class XenoCantoApi {
     const data = await res.json();
 
     const transformedData = this.transformData(data);
-
     return transformedData;
   }
 
