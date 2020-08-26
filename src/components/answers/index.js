@@ -11,7 +11,7 @@ import store from '../../store';
 import * as actions from '../../redux/actions';
 import toggleClassName from './utils';
 
-const Answers = ({ categoryIndex, selectedBird }) => {
+const Answers = ({ categoryIndex, selectedBird, onAnswer }) => {
   const { answers, transparentize, button } = styles;
 
   const { dispatch } = store;
@@ -28,9 +28,11 @@ const Answers = ({ categoryIndex, selectedBird }) => {
           type="button"
           data-index={index}
           className={`btn btn-info ${button}`}
-          onClick={(event) => {
-            toggleClassName(event);
-          }}>
+          onClick={onAnswer}
+          // onClick={(event) => {
+          //   toggleClassName(event);
+          // }}
+        >
           {name}
         </button>
       </li>
@@ -47,10 +49,12 @@ const Answers = ({ categoryIndex, selectedBird }) => {
 Answers.propTypes = {
   categoryIndex: PropTypes.number.isRequired,
   selectedBird: PropTypes.number,
+  onAnswer: PropTypes.func,
 };
 
 Answers.defaultProps = {
   selectedBird: 0,
+  onAnswer: () => {},
 };
 
 export default Answers;

@@ -3,7 +3,7 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/state-in-constructor */
 
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Answers from '../answers';
 import Details from '../details';
@@ -13,10 +13,11 @@ import { getInfo } from '../../data';
 
 import styles from './index.module.css';
 
-class RowWrapper extends Component {
-  xenoCantoApi = new XenoCantoApi();
+const RowWrapper = ({ selectedBird }) => {
+  const { answersWrapper, button } = styles;
+  const xenoCantoApi = new XenoCantoApi();
 
-  state = {
+  const [mainInfo, setMainInfo] = useState({
     isLoading: true,
     error: false,
     isCorrect: false,
@@ -29,36 +30,33 @@ class RowWrapper extends Component {
     link: '',
     description: '',
     species: null,
+  });
+
+  const onError = () => {
+    setMainInfo({
+      error: true,
+      isLoading: false,
+    });
   };
 
-  async componentDidMount() {
-    const { categoryIndex } = this.state;
-
-    await this.updateInfo(categoryIndex);
-
-    const { species } = this.state;
-
-    this.updateAudio(species);
-  }
-
-  unlockNextLevelButton = () => {
-    const { isCorrect } = this.state;
+  const unlockNextLevelButton = () => {
+    const { isCorrect } = mainInfo;
     const nextLevelBtn = document.querySelector('#nextLevel');
 
     if (isCorrect) {
       nextLevelBtn.disabled = false;
     }
 
-    this.setState({
+    setMainInfo({
       categoryIndex: 1,
     });
   };
 
-  updateAudio = (requestText) => {
-    this.xenoCantoApi
+  const updateAudio = (requestText) => {
+    xenoCantoApi
       .getData(requestText)
       .then((audio) =>
-        this.setState({
+        setMainInfo({
           currentBirdID: audio.id,
           nameEn: audio.nameEn,
           latinName: audio.latinName,
@@ -66,16 +64,14 @@ class RowWrapper extends Component {
           isLoading: false,
         })
       )
-      .catch(this.onError);
+      .catch(onError);
   };
 
-  updateInfo = (categoryIndex) => {
+  const updateInfo = (categoryIndex) => {
     const info = getInfo(categoryIndex);
-
     const { link, description, name, species } = info;
-    const { selectedBird } = this.props;
 
-    this.setState((state) => ({
+    setMainInfo((state) => ({
       ...state,
       link,
       description,
@@ -85,67 +81,68 @@ class RowWrapper extends Component {
     }));
   };
 
-  onError = () => {
-    this.setState({
-      error: true,
-      isLoading: false,
-    });
+  useEffect(() => {
+    const { categoryIndex } = mainInfo;
+
+    updateInfo(categoryIndex);
+
+    const { species } = mainInfo;
+
+    updateAudio(species);
+  });
+
+  const onAnswer = (event) => {
+    const { isLoading } = mainInfo;
+    // const { answersButtons } = styles;
+
+    if (isLoading) {
+      return;
+    }
+
+    const randomSoundId = document.querySelector('#randomSound').dataset.random;
+    const checkedAnswerId = event.target.dataset.index;
+
+    if (randomSoundId === checkedAnswerId) {
+      setMainInfo({
+        isCorrect: true,
+      });
+
+      unlockNextLevelButton();
+      console.log('true!');
+    }
+
+    // event.target.className = isCorrect
+    //   ? `btn btn-success ${answersButtons}`
+    //   : `btn btn-danger ${answersButtons}`;
   };
 
-  // onAnswer = (event) => {
-  //   const { isCorrect, isLoading } = this.state;
-  //   const { answersButtons } = styles;
+  const { isCorrect, isChecked, categoryIndex } = mainInfo;
 
-  //   if (isLoading) {
-  //     return;
-  //   }
-
-  //   const randomSoundId = document.querySelector('#randomSound').dataset.random;
-  //   const checkedAnswerId = event.target.dataset.index;
-
-  //   if (randomSoundId === checkedAnswerId) {
-  //     this.setState({
-  //       isCorrect: true,
-  //     });
-
-  //     this.unlockNextLevelButton();
-  //   }
-
-  //   event.target.className = isCorrect
-  //     ? `btn btn-success ${answersButtons}`
-  //     : `btn btn-danger ${answersButtons}`;
-  // };
-
-  render() {
-    const { answersWrapper, button } = styles;
-    const { isCorrect, isChecked, categoryIndex } = this.state;
-    const { selectedBird } = this.props;
-
-    return (
-      <>
-        <div className={answersWrapper}>
-          <Answers
-            selectedBird={selectedBird}
-            isChecked={isChecked}
-            isCorrect={isCorrect}
-            categoryIndex={categoryIndex}
-          />
-          <Details
-            details={this.state}
-            selectedBird={selectedBird}
-            onError={this.onError}
-          />
-        </div>
-        <button
-          type="button"
-          className={`btn btn-primary btn-lg btn-block ${button}`}
-          id="nextLevel"
-          disabled>
-          Следующий уровень
-        </button>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <div className={answersWrapper}>
+        <Answers
+          selectedBird={selectedBird}
+          isChecked={isChecked}
+          isCorrect={isCorrect}
+          categoryIndex={categoryIndex}
+          onAnswer={onAnswer}
+        />
+        <Details
+          details={mainInfo}
+          selectedBird={selectedBird}
+          onError={onError}
+        />
+      </div>
+      <button
+        type="button"
+        className={`btn btn-primary btn-lg btn-block ${button}`}
+        id="nextLevel"
+        disabled>
+        Следующий уровень
+      </button>
+    </>
+  );
+};
 
 export default RowWrapper;

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-/* eslint-disable react/state-in-constructor */
 
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import XenoCantoApi from '../../services/xeno-canto-api';
 import Spinner from '../spinner';
 import ErrorMessage from '../error-message';
@@ -10,78 +10,78 @@ import { getInfo } from '../../data';
 import { randomInteger, hideName } from './helpers';
 import styles from './index.module.css';
 
-class RandomSound extends Component {
-  xenoCantoApi = new XenoCantoApi();
+const RandomSound = () => {
+  const { playerElement, wrapper, image, audioPlayer, playerOuter } = styles;
 
-  randomIndex = randomInteger(0, 5);
+  const xenoCantoApi = new XenoCantoApi();
 
-  info = getInfo(0, this.randomIndex);
+  const randomIndex = randomInteger(0, 5);
 
-  req = this.info.species;
+  const info = getInfo(0, randomIndex);
 
-  state = {
+  const req = info.species;
+
+  const [randomSound, setRandomSound] = useState({
     audioURL: '',
     isLoading: true,
     isGuessed: false,
     error: false,
-  };
+  });
 
-  componentDidMount() {
-    this.updateAudio();
-  }
-
-  onError = () => {
-    this.setState({
+  const onError = () => {
+    setRandomSound({
       error: true,
       isLoading: false,
     });
   };
 
-  updateAudio = () => {
-    this.xenoCantoApi
-      .getData(this.req)
+  const updateAudio = () => {
+    xenoCantoApi
+      .getData(req)
       .then((audio) =>
-        this.setState({
+        setRandomSound({
           audioURL: audio.audioURL,
           isLoading: false,
         })
       )
-      .catch(this.onError);
+      .catch(onError);
   };
 
-  render() {
-    const { audioURL, isLoading, isGuessed, error } = this.state;
-    const { link, name, id } = this.info;
-    const { playerElement, wrapper, image, audioPlayer, playerOuter } = styles;
+  useEffect(() => {
+    updateAudio();
+  });
 
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const playerInner = (
-      <>
-        <img className={image} src={link} alt={name} width="200" />
-        <div className={`card border-success ${playerElement}`}>
-          <h4 className="card-header">{isGuessed ? name : hideName(name)}</h4>
-          <div className={`card-body ${playerOuter}`}>
-            <audio
-              className={audioPlayer}
-              src={audioURL}
-              preload="auto"
-              controls
-            />
-          </div>
+  const { audioURL, isLoading, isGuessed, error } = randomSound;
+  const { link, name, id } = info;
+
+  const errorMessage = error ? <ErrorMessage /> : null;
+
+  const playerInner = (
+    <>
+      <img className={image} src={link} alt={name} width="200" />
+      <div className={`card border-success ${playerElement}`}>
+        <h4 className="card-header">{isGuessed ? name : hideName(name)}</h4>
+        <div className={`card-body ${playerOuter}`}>
+          <audio
+            className={audioPlayer}
+            src={audioURL}
+            preload="auto"
+            controls
+          />
         </div>
-      </>
-    );
-
-    return (
-      <div className={`jumbotron ${wrapper}`} data-random={id} id="randomSound">
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <PlayerContainer errorText={errorMessage} inner={playerInner} />
-        )}
       </div>
-    );
-  }
-}
+    </>
+  );
+
+  return (
+    <div className={`jumbotron ${wrapper}`} data-random={id} id="randomSound">
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <PlayerContainer errorText={errorMessage} inner={playerInner} />
+      )}
+    </div>
+  );
+};
 
 export default RandomSound;
