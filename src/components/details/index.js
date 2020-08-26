@@ -1,12 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unused-prop-types */
-/* eslint-disable react/prefer-stateless-function */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
-/* eslint-disable react/state-in-constructor */
 
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import XenoCantoApi from '../../services/xeno-canto-api';
@@ -15,28 +12,23 @@ import Spinner from '../spinner';
 import InfoInner from './info-inner';
 import styles from './index.module.css';
 
-class Details extends Component {
-  xenoCantoApi = new XenoCantoApi();
+const Details = ({ details, onError, selectedBird }) => {
+  const { infoBlock } = styles;
+  const xenoCantoApi = new XenoCantoApi();
 
-  componentDidMount() {
-    this.updateBird();
-  }
+  const [birdDetails, setBirdDetails] = useState({
+    isLoading: true,
+  });
 
-  updateBird() {
-    const { details, onError } = this.props;
-
-    if (details.birdID) {
+  const updateBird = () => {
+    if (!details.birdID) {
       return;
     }
 
-    this.setState({
-      isLoading: true,
-    });
-
-    this.xenoCantoApi
+    xenoCantoApi
       .getData(details.species)
       .then((audio) =>
-        this.setState({
+        setBirdDetails({
           currentBirdID: audio.id,
           nameEn: audio.nameEn,
           latinName: audio.latinName,
@@ -49,32 +41,31 @@ class Details extends Component {
     const info = getInfo(details.categoryIndex, details.birdID);
     const { link, description, name, species } = info;
 
-    this.setState((state) => ({
+    setBirdDetails((state) => ({
       ...state,
       link,
       description,
       name,
       species,
+      isLoading: false,
     }));
-  }
+  };
 
-  render() {
-    const { infoBlock } = styles;
+  useEffect(() => {
+    updateBird();
+  });
 
-    const { selectedBird, details } = this.props;
-
-    return (
-      <div
-        className={`card border-secondary col-12 col-sm-12 col-md-12 col-lg-9 ${infoBlock}`}>
-        {details.isLoading ? (
-          <Spinner />
-        ) : (
-          <InfoInner details={details} selectedBird={selectedBird} />
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div
+      className={`card border-secondary col-12 col-sm-12 col-md-12 col-lg-9 ${infoBlock}`}>
+      {birdDetails.isLoading ? (
+        <Spinner />
+      ) : (
+        <InfoInner details={details} selectedBird={selectedBird} />
+      )}
+    </div>
+  );
+};
 
 Details.propTypes = {
   details: PropTypes.object,
