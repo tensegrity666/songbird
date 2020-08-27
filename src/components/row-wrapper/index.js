@@ -4,17 +4,15 @@
 /* eslint-disable react/no-unused-state */
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Answers from '../answers';
 import Details from '../details';
 
-import store from '../../store';
 import styles from './index.module.css';
 
-const RowWrapper = () => {
+const RowWrapper = ({ isNextLevelButtonDisabled }) => {
   const { answersWrapper, button } = styles;
-
-  const { isNextLevelButtonDisabled } = store.getState();
 
   return (
     <>
@@ -33,4 +31,8 @@ const RowWrapper = () => {
   );
 };
 
-export default RowWrapper;
+const mapStateToProps = ({ isNextLevelButtonDisabled }) => {
+  return { isNextLevelButtonDisabled };
+};
+
+export default connect(mapStateToProps)(RowWrapper);

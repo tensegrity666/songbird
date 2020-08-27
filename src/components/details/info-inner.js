@@ -25,9 +25,9 @@ const InfoInner = ({ details }) => {
   const { audioURL, description, link, name, hasError, species } = details;
 
   // eslint-disable-next-line no-console
-  console.log(details);
-  // eslint-disable-next-line no-console
-  console.log(store.getState());
+  // console.log(details);
+  // // eslint-disable-next-line no-console
+  // console.log(store.getState());
 
   if (!isAnswerChecked) {
     return (

@@ -5,17 +5,18 @@ const initialState = {
   score: 0,
 
   isAnswerCorrect: false,
-  isAnswerChecked: false,
   initialScorePointsPerCategory: 10,
   scorePointsIfWrong: 5,
   maximumPoints: 60,
 
   isPlayerWin: false,
   isGameFinished: false,
+  isLevelCompleted: false,
 
   questionRequest: null,
   detailsRequest: null,
 
+  isAnswerChecked: false,
   activeCategory: 0,
   selectedAnswer: 0,
 

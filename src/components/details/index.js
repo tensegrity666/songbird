@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
@@ -32,26 +31,6 @@ const Details = () => {
       {details.isContentLoading ? <Spinner /> : <InfoInner details={details} />}
     </div>
   );
-};
-
-Details.propTypes = {
-  details: PropTypes.object,
-  nameEn: PropTypes.string,
-  latinName: PropTypes.string,
-  audioURL: PropTypes.string,
-  description: PropTypes.string,
-  link: PropTypes.string,
-  name: PropTypes.string,
-};
-
-Details.defaultProps = {
-  details: {},
-  nameEn: '',
-  latinName: '',
-  audioURL: '',
-  description: '',
-  link: '',
-  name: '',
 };
 
 export default Details;
