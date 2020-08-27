@@ -8,6 +8,7 @@ const initialState = {
   initialScorePointsPerCategory: 10,
   scorePointsIfWrong: 5,
   maximumPoints: 60,
+  hasAnswer: false,
 
   isPlayerWin: false,
   isGameFinished: false,
