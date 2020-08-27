@@ -1,30 +1,38 @@
 import actionTypes from '../constants';
 import initialState from '../initial-state';
 
-const { ANSWER_TRUE, ANSWER_FALSE, ANSWER_TRUE1 } = actionTypes;
+const { ANSWER_TRUE, ANSWER_FALSE, ALREADY_ANSWERED } = actionTypes;
 
 const reducer = (state = initialState, { type }) => {
-  const { score, initialScorePointsPerCategory, scorePointsIfWrong } = state;
+  const {
+    score,
+    initialScorePointsPerCategory,
+    scorePointsIfWrong,
+    hasAnswer,
+  } = state;
 
   switch (type) {
-    case ANSWER_TRUE1:
+    case ANSWER_TRUE:
       return {
         ...state,
         isAnswerCorrect: true,
         isNextLevelButtonDisabled: false,
-        score: score + initialScorePointsPerCategory,
-      };
-
-    case ANSWER_TRUE:
-      return {
-        score: 100,
+        score: hasAnswer ? score : score + initialScorePointsPerCategory,
+        hasAnswer: true,
       };
 
     case ANSWER_FALSE:
       return {
         ...state,
         isAnswerCorrect: false,
-        score: score + scorePointsIfWrong,
+        score: hasAnswer ? score - 1 : score + scorePointsIfWrong,
+        hasAnswer: true,
+      };
+
+    case ALREADY_ANSWERED:
+      return {
+        ...state,
+        hasAnswer: true,
       };
 
     default:

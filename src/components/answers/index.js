@@ -4,17 +4,24 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { getArrayOfNames } from '../../data';
-import { setAnswerTrue, setAnswerFalse } from '../../redux/actions';
 
-import styles from './index.module.css';
 import store from '../../store';
+import * as actions from '../../redux/actions';
+import styles from './index.module.css';
 
 const Answers = ({ activeCategory, isContentLoading }) => {
   const { answers, transparentize, button } = styles;
 
   const [namesList, setNamesList] = useState(getArrayOfNames(activeCategory));
+
+  const { dispatch } = store;
+  const { setAnswerTrue, setAnswerFalse } = bindActionCreators(
+    actions,
+    dispatch
+  );
 
   const onAnswer = (event) => {
     if (isContentLoading) {
@@ -32,8 +39,6 @@ const Answers = ({ activeCategory, isContentLoading }) => {
       console.log(store.getState());
     } else {
       setAnswerFalse(event);
-      // eslint-disable-next-line no-console
-      console.log(store.getState());
     }
   };
 
@@ -64,14 +69,9 @@ const mapStateToProps = ({ activeCategory, isContentLoading }) => {
   return { activeCategory, isContentLoading };
 };
 
-const mapDispatchToProps = {
-  setAnswerTrue,
-  setAnswerFalse,
-};
-
 Answers.propTypes = {
   activeCategory: PropTypes.number.isRequired,
   isContentLoading: PropTypes.bool.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Answers);
+export default connect(mapStateToProps)(Answers);
