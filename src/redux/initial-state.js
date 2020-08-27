@@ -1,5 +1,6 @@
 const initialState = {
-  isContentLoading: false,
+  isContentLoading: true,
+  hasError: false,
 
   initialQuestion: 1,
   activeCategory: 0,

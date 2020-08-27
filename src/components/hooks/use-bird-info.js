@@ -1,39 +1,29 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 
 import XenoCantoApi from '../../services/xeno-canto-api';
-import { getInfo } from '../../data';
-import { randomInteger } from './helpers';
-
-const randomIndex = randomInteger(0, 5);
-const info = getInfo(0, randomIndex);
+import store from '../../store';
 
 const getBirdVoice = (latinName) => {
   const xenoCantoApi = new XenoCantoApi();
+
   return xenoCantoApi.getData(latinName).then((audio) => audio);
 };
 
 const useRequest = (request, details) => {
-  const initialState = useMemo(
-    () => ({
-      audioURL: '',
-      isLoading: true,
-      isGuessed: false,
-      error: false,
-    }),
-    []
-  );
+  const state = store.getState();
+
+  const initialState = useMemo(() => ({ ...state }), [state]);
 
   const [randomSound, setRandomSound] = useState(initialState);
 
   const onError = () => {
     setRandomSound({
-      error: true,
-      isLoading: false,
+      hasError: true,
+      isContentLoading: false,
     });
   };
 
   useEffect(() => {
-    setRandomSound(initialState);
     let isCancelled = false;
     request()
       .then(
@@ -41,7 +31,7 @@ const useRequest = (request, details) => {
           !isCancelled &&
           setRandomSound({
             audioURL: data.audioURL,
-            isLoading: false,
+            isContentLoading: false,
           })
       )
       .catch(() => !isCancelled && onError());
@@ -54,12 +44,10 @@ const useRequest = (request, details) => {
   return { ...randomSound, ...details };
 };
 
-const useBirdInfo = () => {
-  const req = info.species;
-
+const useBirdInfo = (req, details) => {
   const request = useCallback(() => getBirdVoice(req), [req]);
 
-  return useRequest(request, info);
+  return useRequest(request, details);
 };
 
 export default useBirdInfo;
