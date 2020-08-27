@@ -1,3 +1,5 @@
+/* eslint-disable react/forbid-prop-types */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,7 +12,7 @@ const PlayerContainer = ({ errorText, inner }) => {
 };
 
 PlayerContainer.propTypes = {
-  errorText: PropTypes.string,
+  errorText: PropTypes.object,
   inner: PropTypes.element.isRequired,
 };
 

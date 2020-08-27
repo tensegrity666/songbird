@@ -2,21 +2,17 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useState } from 'react';
-import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { getArrayOfNames } from '../../data';
+import { setAnswerTrue, setAnswerFalse } from '../../redux/actions';
 
 import styles from './index.module.css';
-import { getArrayOfNames } from '../../data';
 import store from '../../store';
-import * as actions from '../../redux/actions';
-// import toggleClassName from './utils';
 
-const Answers = () => {
+const Answers = ({ activeCategory, isContentLoading }) => {
   const { answers, transparentize, button } = styles;
-
-  const { dispatch } = store;
-  const { answerTrue } = bindActionCreators(actions, dispatch);
-
-  const { activeCategory, isContentLoading } = store.getState();
 
   const [namesList, setNamesList] = useState(getArrayOfNames(activeCategory));
 
@@ -25,23 +21,21 @@ const Answers = () => {
       return;
     }
 
-    // const randomSoundId = document.querySelector('#randomSound').dataset.random;
-    // const checkedAnswerId = event.target.dataset.index;
+    const randomSoundId = document.querySelector('#randomSound').dataset.random;
+    const checkedAnswerId = event.target.dataset.index;
 
-    // if (randomSoundId === checkedAnswerId) {
-    //   setMainInfo({
-    //     isCorrect: true,
-    //   });
+    event.target.classList.remove('btn-info');
 
-    //   unlockNextLevelButton();
-    //   // eslint-disable-next-line no-console
-    //   console.log('true!');
-    // }
-
-    answerTrue();
+    if (randomSoundId === checkedAnswerId) {
+      setAnswerTrue(event);
+      // eslint-disable-next-line no-console
+      console.log(store.getState());
+    } else {
+      setAnswerFalse(event);
+      // eslint-disable-next-line no-console
+      console.log(store.getState());
+    }
   };
-
-  // const { isCorrect, isChecked, categoryIndex } = mainInfo;
 
   const buttons = namesList.map((name, index) => {
     return (
@@ -52,11 +46,7 @@ const Answers = () => {
           type="button"
           data-index={index}
           className={`btn btn-info ${button}`}
-          onClick={onAnswer}
-          // onClick={(event) => {
-          //   toggleClassName(event);
-          // }}
-        >
+          onClick={onAnswer}>
           {name}
         </button>
       </li>
@@ -70,4 +60,18 @@ const Answers = () => {
   );
 };
 
-export default Answers;
+const mapStateToProps = ({ activeCategory, isContentLoading }) => {
+  return { activeCategory, isContentLoading };
+};
+
+const mapDispatchToProps = {
+  setAnswerTrue,
+  setAnswerFalse,
+};
+
+Answers.propTypes = {
+  activeCategory: PropTypes.number.isRequired,
+  isContentLoading: PropTypes.bool.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Answers);
