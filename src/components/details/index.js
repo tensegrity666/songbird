@@ -4,67 +4,29 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import XenoCantoApi from '../../services/xeno-canto-api';
-import { getInfo } from '../../data';
 import Spinner from '../spinner';
 import InfoInner from './info-inner';
+
+import { getInfo } from '../../data';
+import useBirdInfo from '../hooks/use-bird-info';
+
 import styles from './index.module.css';
 
-const Details = ({ details, onError, selectedBird }) => {
+const Details = ({ selectedBird }) => {
   const { infoBlock } = styles;
-  const xenoCantoApi = new XenoCantoApi();
 
-  const [birdAudio, setBirdAudio] = useState({
-    isLoading: true,
-  });
+  const info = getInfo(0, 0);
+  const req = info.species;
 
-  const [birdDetails, setBirdDetails] = useState({});
-
-  const updateBirdAudio = () => {
-    if (!details.birdID) {
-      return;
-    }
-
-    xenoCantoApi
-      .getData(details.species)
-      .then((audio) =>
-        setBirdAudio({
-          currentBirdID: audio.id,
-          nameEn: audio.nameEn,
-          latinName: audio.latinName,
-          audioURL: audio.audioURL,
-          isLoading: false,
-        })
-      )
-      .catch(onError());
-  };
-
-  const updateBirdDetails = () => {
-    const info = getInfo(details.categoryIndex, details.birdID);
-    const { link, description, name, species } = info;
-
-    setBirdDetails((state) => ({
-      ...state,
-      link,
-      description,
-      name,
-      species,
-      isLoading: false,
-    }));
-  };
-
-  useEffect(() => {
-    updateBirdDetails();
-    console.log(birdDetails);
-  }, [birdDetails, updateBirdDetails]);
+  const details = useBirdInfo(req, info);
 
   return (
     <div
       className={`card border-secondary col-12 col-sm-12 col-md-12 col-lg-9 ${infoBlock}`}>
-      {birdDetails.isLoading ? (
+      {details.isContentLoading ? (
         <Spinner />
       ) : (
         <InfoInner details={details} selectedBird={selectedBird} />

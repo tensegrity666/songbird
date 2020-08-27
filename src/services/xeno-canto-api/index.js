@@ -2,6 +2,7 @@
 /* eslint-disable prefer-destructuring */
 
 import { noCors, apiBase, page } from './constants';
+import { randomInteger } from '../../helpers';
 
 class XenoCantoApi {
   async getData(req) {
@@ -13,7 +14,9 @@ class XenoCantoApi {
   }
 
   transformData(data) {
-    const { en, gen, sp, file, id } = data.recordings[0];
+    const pageResults = randomInteger(0, 9);
+
+    const { en, gen, sp, file, id } = data.recordings[pageResults];
 
     return {
       questionID: id,

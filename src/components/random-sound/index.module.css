@@ -41,6 +41,10 @@
   filter: blur(1px);
 }
 
+.audioPlayer::-webkit-media-controls-time-remaining-display {
+  display: none;
+}
+
 .audioPlayer::-webkit-media-controls-play-button:active {
   filter: blur(1px);
 }
