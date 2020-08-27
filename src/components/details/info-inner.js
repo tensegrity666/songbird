@@ -5,9 +5,10 @@
 import React from 'react';
 
 import ErrorMessage from '../error-message';
+import store from '../../store';
 import styles from './index.module.css';
 
-const InfoInner = ({ details, selectedBird }) => {
+const InfoInner = ({ details }) => {
   const {
     soundPlayer,
     image,
@@ -16,24 +17,32 @@ const InfoInner = ({ details, selectedBird }) => {
     paragraph,
     title,
     detailsWrapper,
+    chooseBirdWrapper,
   } = styles;
 
-  const { audioURL, description, link, name, error, species } = details;
+  const { isAnswerChecked } = store.getState();
 
-  if (selectedBird) {
+  const { audioURL, description, link, name, hasError, species } = details;
+
+  // eslint-disable-next-line no-console
+  console.log(details);
+  // eslint-disable-next-line no-console
+  console.log(store.getState());
+
+  if (!isAnswerChecked) {
     return (
-      <div className={container}>
+      <div className={chooseBirdWrapper}>
         <p>Выберите птицу из меню слева</p>
       </div>
     );
   }
 
-  const errorMessage = error ? <ErrorMessage /> : null;
+  const errorMessage = hasError ? <ErrorMessage /> : null;
 
   return (
     <div className={container}>
       <img
-        className={`${image}`}
+        className={image}
         src={`${process.env.PUBLIC_URL}${link}`}
         alt={name}
         width="400"

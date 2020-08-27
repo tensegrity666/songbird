@@ -1,11 +1,14 @@
 const initialState = {
-  isContentLoading: true,
+  isContentLoading: false,
   hasError: false,
 
-  initialQuestion: 1,
-  activeCategory: 0,
-  selectedAnswer: null,
+  score: 0,
+
   isAnswerCorrect: false,
+  isAnswerChecked: false,
+  initialScorePointsPerCategory: 10,
+  scorePointsIfWrong: 5,
+  maximumPoints: 60,
 
   isPlayerWin: false,
   isGameFinished: false,
@@ -13,20 +16,18 @@ const initialState = {
   questionRequest: null,
   detailsRequest: null,
 
+  activeCategory: 0,
+  selectedAnswer: 0,
+
   questionID: null,
   answerID: null,
-
-  score: 0,
-  initialScorePointsPerCategory: 10,
-  scorePointsIfWrong: 2,
-  maximumPoints: 36,
 
   audioURL: null,
   rusName: null,
   latinName: null,
   rusDescription: null,
 
-  isButtonDisabled: false,
+  isNextLevelButtonDisabled: true,
 };
 
 export default initialState;

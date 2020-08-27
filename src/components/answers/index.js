@@ -2,22 +2,46 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
 import styles from './index.module.css';
 import { getArrayOfNames } from '../../data';
 import store from '../../store';
 import * as actions from '../../redux/actions';
-import toggleClassName from './utils';
+// import toggleClassName from './utils';
 
-const Answers = ({ categoryIndex, selectedBird, onAnswer }) => {
+const Answers = () => {
   const { answers, transparentize, button } = styles;
 
   const { dispatch } = store;
-  const { disable, enable } = bindActionCreators(actions, dispatch);
+  const { answerTrue } = bindActionCreators(actions, dispatch);
 
-  const [namesList, setNamesList] = useState(getArrayOfNames(categoryIndex));
+  const { activeCategory, isContentLoading } = store.getState();
+
+  const [namesList, setNamesList] = useState(getArrayOfNames(activeCategory));
+
+  const onAnswer = (event) => {
+    if (isContentLoading) {
+      return;
+    }
+
+    // const randomSoundId = document.querySelector('#randomSound').dataset.random;
+    // const checkedAnswerId = event.target.dataset.index;
+
+    // if (randomSoundId === checkedAnswerId) {
+    //   setMainInfo({
+    //     isCorrect: true,
+    //   });
+
+    //   unlockNextLevelButton();
+    //   // eslint-disable-next-line no-console
+    //   console.log('true!');
+    // }
+
+    answerTrue();
+  };
+
+  // const { isCorrect, isChecked, categoryIndex } = mainInfo;
 
   const buttons = namesList.map((name, index) => {
     return (
@@ -44,17 +68,6 @@ const Answers = ({ categoryIndex, selectedBird, onAnswer }) => {
       {buttons}
     </ul>
   );
-};
-
-Answers.propTypes = {
-  categoryIndex: PropTypes.number.isRequired,
-  selectedBird: PropTypes.number,
-  onAnswer: PropTypes.func,
-};
-
-Answers.defaultProps = {
-  selectedBird: 0,
-  onAnswer: () => {},
 };
 
 export default Answers;

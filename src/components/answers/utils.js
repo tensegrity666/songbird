@@ -1,7 +1,7 @@
 import store from '../../store';
 
 const toggleClassName = (event) => {
-  const { isButtonDisabled, isContentLoading } = store.getState();
+  const { isAnswerCorrect, isContentLoading } = store.getState();
 
   if (isContentLoading) {
     return;
@@ -9,10 +9,10 @@ const toggleClassName = (event) => {
 
   event.target.classList.remove('btn-info');
 
-  if (isButtonDisabled) {
-    event.target.classList.add('btn-danger');
-  } else {
+  if (isAnswerCorrect) {
     event.target.classList.add('btn-success');
+  } else {
+    event.target.classList.add('btn-danger');
   }
 };
 

@@ -1,8 +1,9 @@
+/* eslint-disable import/prefer-default-export */
+
 import actionTypes from '../constants';
 
-const { DISABLE_BTN, ENABLE_BTN } = actionTypes;
+const { ANSWER_TRUE } = actionTypes;
 
-const disable = () => ({ type: DISABLE_BTN });
-const enable = () => ({ type: ENABLE_BTN });
+const answerTrue = () => ({ type: ANSWER_TRUE });
 
-export { enable, disable };
+export { answerTrue };

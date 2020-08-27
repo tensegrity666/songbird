@@ -1,20 +1,18 @@
 import actionTypes from '../constants';
 import initialState from '../initial-state';
 
-const { DISABLE_BTN, ENABLE_BTN } = actionTypes;
+const { ANSWER_TRUE } = actionTypes;
 
-const reducer = (state = initialState, { type }) => {
+const reducer = (state = initialState, { type, payload }) => {
+  const { score, initialScorePointsPerCategory } = state;
+
   switch (type) {
-    case DISABLE_BTN:
+    case ANSWER_TRUE:
       return {
         ...state,
-        isButtonDisabled: true,
-      };
-
-    case ENABLE_BTN:
-      return {
-        ...state,
-        isButtonDisabled: false,
+        payload,
+        isAnswerCorrect: true,
+        score: score + initialScorePointsPerCategory,
       };
 
     default:
