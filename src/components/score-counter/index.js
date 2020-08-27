@@ -1,14 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import store from '../../store';
 import styles from './index.module.css';
 
-const ScoreCounter = () => {
+const ScoreCounter = ({ score }) => {
   const { scoreBar } = styles;
 
-  const { score } = store.getState();
-
-  return <span className={scoreBar}>Score: {score}</span>;
+  return <span className={scoreBar}>Результат: {score}</span>;
 };
 
-export default ScoreCounter;
+const mapStateToProps = ({ score }) => {
+  return { score };
+};
+
+ScoreCounter.propTypes = {
+  score: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(ScoreCounter);

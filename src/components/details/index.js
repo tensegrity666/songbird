@@ -12,13 +12,16 @@ import InfoInner from './info-inner';
 
 import { getInfo } from '../../data';
 import useBirdInfo from '../hooks/use-bird-info';
+import store from '../../store';
 
 import styles from './index.module.css';
 
-const Details = ({ selectedBird }) => {
+const Details = () => {
   const { infoBlock } = styles;
 
-  const info = getInfo(0, 0);
+  const { activeCategory, selectedAnswer } = store.getState();
+
+  const info = getInfo(activeCategory, selectedAnswer);
   const req = info.species;
 
   const details = useBirdInfo(req, info);
@@ -26,11 +29,7 @@ const Details = ({ selectedBird }) => {
   return (
     <div
       className={`card border-secondary col-12 col-sm-12 col-md-12 col-lg-9 ${infoBlock}`}>
-      {details.isContentLoading ? (
-        <Spinner />
-      ) : (
-        <InfoInner details={details} selectedBird={selectedBird} />
-      )}
+      {details.isContentLoading ? <Spinner /> : <InfoInner details={details} />}
     </div>
   );
 };

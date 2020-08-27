@@ -1,6 +1,5 @@
 const actionTypes = {
-  DISABLE_BTN: 'DISABLE_BTN',
-  ENABLE_BTN: 'ENABLE_BTN',
+  ANSWER_TRUE: 'ANSWER_TRUE',
 };
 
 export default actionTypes;
