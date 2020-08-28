@@ -28,6 +28,7 @@ const initialState = {
   rusName: null,
   latinName: null,
   rusDescription: null,
+  photo: null,
 
   isNextLevelButtonDisabled: true,
 };

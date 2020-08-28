@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
 
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Spinner from '../spinner';
@@ -15,15 +17,16 @@ import store from '../../store';
 
 import styles from './index.module.css';
 
-const Details = () => {
+const Details = ({ activeCategory, selectedAnswer }) => {
   const { infoBlock } = styles;
 
-  const { activeCategory, selectedAnswer } = store.getState();
+  // const info = getInfo(activeCategory, selectedAnswer);
+  // const req = info.species;
 
-  const info = getInfo(activeCategory, selectedAnswer);
-  const req = info.species;
+  // const details = useBirdInfo(req, info);
 
-  const details = useBirdInfo(req, info);
+  // console.log(activeCategory)
+  const details = { isContentLoading: true };
 
   return (
     <div
@@ -33,4 +36,8 @@ const Details = () => {
   );
 };
 
-export default Details;
+const mapStateToProps = ({ activeCategory, selectedAnswer }) => {
+  return { activeCategory, selectedAnswer };
+};
+
+export default connect(mapStateToProps)(Details);

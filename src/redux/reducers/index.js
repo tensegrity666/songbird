@@ -1,9 +1,14 @@
 import actionTypes from '../constants';
 import initialState from '../initial-state';
 
-const { ANSWER_TRUE, ANSWER_FALSE, ALREADY_ANSWERED } = actionTypes;
+const {
+  ANSWER_TRUE,
+  ANSWER_FALSE,
+  HANDLE_ERROR,
+  FETCH_RANDOM_SOUND,
+} = actionTypes;
 
-const reducer = (state = initialState, { type }) => {
+const reducer = (state = initialState, { type, payload }) => {
   const {
     score,
     initialScorePointsPerCategory,
@@ -29,10 +34,24 @@ const reducer = (state = initialState, { type }) => {
         hasAnswer: true,
       };
 
-    case ALREADY_ANSWERED:
+    case HANDLE_ERROR:
       return {
         ...state,
-        hasAnswer: true,
+        isContentLoading: false,
+        hasError: true,
+      };
+
+    case FETCH_RANDOM_SOUND:
+      return {
+        ...state,
+        isContentLoading: false,
+        hasError: false,
+        audioURL: payload.audioURL,
+        rusName: payload.name,
+        latinName: payload.species,
+        rusDescription: payload.description,
+        answerID: payload.id,
+        photo: payload.link,
       };
 
     default:

@@ -1,6 +1,8 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useCallback } from 'react';
+import { connect } from 'react-redux';
 
 import XenoCantoApi from '../../services/xeno-canto-api';
+import { handleError, fetchRandomSound } from '../../redux/actions';
 import store from '../../store';
 
 const getBirdVoice = (latinName) => {
@@ -9,45 +11,35 @@ const getBirdVoice = (latinName) => {
   return xenoCantoApi.getData(latinName).then((audio) => audio);
 };
 
-const useRequest = (request, details) => {
-  const state = store.getState();
-
-  const initialState = useMemo(() => ({ ...state }), [state]);
-
-  const [randomSound, setRandomSound] = useState(initialState);
-
-  const onError = () => {
-    setRandomSound({
-      hasError: true,
-      isContentLoading: false,
-    });
-  };
-
+const useRequest = (request) => {
   useEffect(() => {
-    let isCancelled = false;
+    // let isCancelled = false;
     request()
-      .then(
-        (data) =>
-          !isCancelled &&
-          setRandomSound({
-            audioURL: data.audioURL,
-            isContentLoading: false,
-          })
-      )
-      .catch(() => !isCancelled && onError());
+      .then((data) => {
+        fetchRandomSound({
+          audioURL: data.audioURL,
+        });
+      })
+      .catch(() => handleError());
 
-    return () => {
-      isCancelled = true;
-    };
-  }, [request, initialState]);
+    // return () => {
+    //   isCancelled = true;
+    // };
+  }, [request]);
 
-  return { ...randomSound, ...details };
+  return store.getState();
 };
 
-const useBirdInfo = (req, details) => {
+const useBirdInfo = (req) => {
   const request = useCallback(() => getBirdVoice(req), [req]);
 
-  return useRequest(request, details);
+  return useRequest(request);
 };
 
-export default useBirdInfo;
+const mapStateToProps = ({ activeCategory, selectedAnswer }) => {
+  return { activeCategory, selectedAnswer };
+};
+
+const mapDispatchToProps = { handleError, fetchRandomSound };
+
+export default connect(mapStateToProps, mapDispatchToProps)(useBirdInfo);

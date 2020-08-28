@@ -5,6 +5,9 @@ const randomInteger = (min, max) => {
 };
 
 const hideName = (name) => {
+  if (!name) {
+    return '...';
+  }
   return name.replace(/./gm, '⚹');
 };
 
