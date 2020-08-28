@@ -7,6 +7,7 @@ const {
   ANSWER_FALSE,
   HANDLE_ERROR,
   FETCH_RANDOM_SOUND,
+  FETCH_DETAILS_SOUND,
 } = actionTypes;
 
 const setAnswerTrue = (event) => {
@@ -36,4 +37,17 @@ const fetchRandomSound = (payload) => {
   };
 };
 
-export { setAnswerTrue, setAnswerFalse, handleError, fetchRandomSound };
+const fetchDetailsSound = (payload) => {
+  return {
+    type: FETCH_DETAILS_SOUND,
+    payload,
+  };
+};
+
+export {
+  setAnswerTrue,
+  setAnswerFalse,
+  handleError,
+  fetchRandomSound,
+  fetchDetailsSound,
+};
