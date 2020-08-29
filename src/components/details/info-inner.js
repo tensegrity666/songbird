@@ -1,16 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { getInfo } from '../../data';
+import { fetchAudioDataDetails } from '../../services/xeno-canto-api/fetch-audio';
 import ErrorMessage from '../error-message';
 import styles from './index.module.css';
-
-import store from '../../store';
 
 const InfoInner = ({
   details,
@@ -30,7 +28,6 @@ const InfoInner = ({
   } = styles;
 
   const {
-    isContentLoading,
     hasError,
     audioURL,
     rusName,
@@ -39,11 +36,16 @@ const InfoInner = ({
     photo,
   } = details;
 
-  const request = useMemo(() => getInfo(activeCategory, selectedAnswer), []);
-  // eslint-disable-next-line no-console
-  console.log(request);
+  const request = useMemo(() => getInfo(activeCategory, selectedAnswer), [
+    activeCategory,
+    selectedAnswer,
+  ]);
 
-  if (isAnswerChecked) {
+  useEffect(() => {
+    fetchAudioDataDetails(request, isAnswerChecked);
+  }, [request, isAnswerChecked]);
+
+  if (!isAnswerChecked || !selectedAnswer) {
     return (
       <div className={chooseBirdWrapper}>
         <p>Выберите птицу из меню слева</p>
@@ -85,6 +87,17 @@ const mapStateToProps = ({
   isAnswerChecked,
 }) => {
   return { details, activeCategory, selectedAnswer, isAnswerChecked };
+};
+
+InfoInner.propTypes = {
+  details: PropTypes.object.isRequired,
+  isAnswerChecked: PropTypes.bool.isRequired,
+  activeCategory: PropTypes.number.isRequired,
+  selectedAnswer: PropTypes.number,
+};
+
+InfoInner.defaultProps = {
+  selectedAnswer: null,
 };
 
 export default connect(mapStateToProps)(InfoInner);

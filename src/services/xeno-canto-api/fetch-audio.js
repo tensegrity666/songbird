@@ -6,27 +6,35 @@ import store from '../../store';
 import * as actions from '../../redux/actions';
 
 const { dispatch } = store;
-const { handleError, fetchRandomSound } = bindActionCreators(actions, dispatch);
+const {
+  handleErrorInRandom,
+  handleErrorInDetails,
+  fetchRandomSound,
+  fetchDetailsSound,
+} = bindActionCreators(actions, dispatch);
 
-const fetchAudioData = (info, isRandom) => {
+const fetchAudioDataRandom = (info) => {
   const xenoCantoApi = new XenoCantoApi();
   const req = info.species;
 
-  if (isRandom) {
-    return xenoCantoApi
-      .getData(req)
-      .then((data) => {
-        fetchRandomSound({ audioURL: data.audioURL, ...info });
-      })
-      .catch(() => handleError());
-  }
-
-  return xenoCantoApi
+  xenoCantoApi
     .getData(req)
     .then((data) => {
       fetchRandomSound({ audioURL: data.audioURL, ...info });
     })
-    .catch(() => handleError());
+    .catch(() => handleErrorInRandom());
 };
 
-export default fetchAudioData;
+const fetchAudioDataDetails = (info) => {
+  const xenoCantoApi = new XenoCantoApi();
+  const req = info.species;
+
+  xenoCantoApi
+    .getData(req)
+    .then((data) => {
+      fetchDetailsSound({ audioURL: data.audioURL, ...info });
+    })
+    .catch(() => handleErrorInDetails());
+};
+
+export { fetchAudioDataRandom, fetchAudioDataDetails };
