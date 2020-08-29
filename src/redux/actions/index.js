@@ -2,7 +2,12 @@ import actionTypes from '../constants';
 import audioFalse from '../../components/answers/assets/sound-effects/false.mp3';
 import audioTrue from '../../components/answers/assets/sound-effects/true.mp3';
 
-const { ANSWER_TRUE, ANSWER_FALSE, ALREADY_ANSWERED } = actionTypes;
+const {
+  ANSWER_TRUE,
+  ANSWER_FALSE,
+  HANDLE_ERROR,
+  FETCH_RANDOM_SOUND,
+} = actionTypes;
 
 const setAnswerTrue = (event) => {
   event.target.classList.add('btn-success');
@@ -22,6 +27,13 @@ const setAnswerFalse = (event) => {
   return { type: ANSWER_FALSE };
 };
 
-const setAlreadyAnswered = () => ({ type: ALREADY_ANSWERED });
+const handleError = () => ({ type: HANDLE_ERROR });
 
-export { setAnswerTrue, setAnswerFalse, setAlreadyAnswered };
+const fetchRandomSound = (payload) => {
+  return {
+    type: FETCH_RANDOM_SOUND,
+    payload,
+  };
+};
+
+export { setAnswerTrue, setAnswerFalse, handleError, fetchRandomSound };
