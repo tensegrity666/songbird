@@ -314,7 +314,11 @@ const getArrayOfNames = (categoryIndex = 0) => {
   return result;
 };
 
-const getInfo = (index = 0, id = 0) => {
+const getInfo = (index = 0, id) => {
+  if (id === null) {
+    return {};
+  }
+
   const result = birdsData[index].map((bird) => {
     return {
       id: Object.values(bird)[0],
