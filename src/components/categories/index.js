@@ -1,13 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import CATEGORIES from './constants';
-import store from '../../store';
 import styles from './index.module.css';
 
-const Categories = () => {
+const Categories = ({ activeCategory }) => {
   const { buttonGroup } = styles;
-
-  const { activeCategory } = store.getState();
 
   const indicateCurrentCategory = (i) => {
     return i === activeCategory ? null : true;
@@ -38,4 +37,12 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+const mapStateToProps = ({ activeCategory }) => {
+  return { activeCategory };
+};
+
+Categories.propTypes = {
+  activeCategory: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(Categories);

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import Spinner from '../spinner';
 import ErrorMessage from '../error-message';
 import PlayerContainer from './player-container';
-import fetchAudioData from '../../services/xeno-canto-api/fetch-audio';
+import { fetchAudioDataRandom } from '../../services/xeno-canto-api/fetch-audio';
 
 import { hideName, randomInteger } from '../../helpers';
 import styles from './index.module.css';
@@ -36,7 +36,7 @@ const RandomSound = (state) => {
   const request = useMemo(() => getInfo(activeCategory, randomIndex), []);
 
   useEffect(() => {
-    fetchAudioData(request);
+    fetchAudioDataRandom(request);
     const WAIT = 'подождите загрузки компонента...';
     console.log(`Правильный ответ: ${rusName || WAIT}`);
   }, [rusName, request]);

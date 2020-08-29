@@ -19,7 +19,7 @@ const initialState = {
 
   isAnswerChecked: false,
   activeCategory: 0,
-  selectedAnswer: 0,
+  selectedAnswer: null,
 
   questionID: null,
   answerID: null,
@@ -33,6 +33,7 @@ const initialState = {
   isNextLevelButtonDisabled: true,
 
   details: {
+    hasError: false,
     audioURL: null,
     rusName: null,
     latinName: null,

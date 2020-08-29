@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -15,13 +15,19 @@ import styles from './index.module.css';
 const Answers = ({ activeCategory, isContentLoading }) => {
   const { answers, transparentize, button } = styles;
 
-  const [namesList, setNamesList] = useState(getArrayOfNames(activeCategory));
+  const t = getArrayOfNames(activeCategory);
+
+  const [namesList, setNamesList] = useState(t);
 
   const { dispatch } = store;
-  const { setAnswerTrue, setAnswerFalse } = bindActionCreators(
+  const { setAnswerTrue, setAnswerFalse, restoreAnswers } = bindActionCreators(
     actions,
     dispatch
   );
+
+  useEffect(() => {
+    setNamesList(() => getArrayOfNames(activeCategory));
+  }, [activeCategory]);
 
   const onAnswer = (event) => {
     if (isContentLoading) {
@@ -31,12 +37,8 @@ const Answers = ({ activeCategory, isContentLoading }) => {
     const randomSoundId = document.querySelector('#randomSound').dataset.random;
     const checkedAnswerId = event.target.dataset.index;
 
-    event.target.classList.remove('btn-info');
-
     if (randomSoundId === checkedAnswerId) {
       setAnswerTrue(event);
-      // eslint-disable-next-line no-console
-      console.log(store.getState());
     } else {
       setAnswerFalse(event);
     }
@@ -49,6 +51,7 @@ const Answers = ({ activeCategory, isContentLoading }) => {
         className={`list-group-item d-flex justify-content-between align-items-center ${transparentize}`}>
         <button
           type="button"
+          data-answers
           data-index={index}
           className={`btn btn-info ${button}`}
           onClick={onAnswer}>
