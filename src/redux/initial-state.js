@@ -1,5 +1,5 @@
 const initialState = {
-  isContentLoading: false,
+  isContentLoading: true,
   hasError: false,
 
   score: 0,
@@ -31,6 +31,14 @@ const initialState = {
   photo: null,
 
   isNextLevelButtonDisabled: true,
+
+  details: {
+    audioURL: null,
+    rusName: null,
+    latinName: null,
+    rusDescription: null,
+    photo: null,
+  },
 };
 
 export default initialState;

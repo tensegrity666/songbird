@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/no-unused-prop-types */
@@ -29,9 +30,10 @@ const RandomSound = (state) => {
     photo,
     answerID,
     rusName,
+    activeCategory,
   } = state;
 
-  const request = useMemo(() => getInfo(0, randomIndex), []);
+  const request = useMemo(() => getInfo(activeCategory, randomIndex), []);
 
   useEffect(() => {
     fetchAudioData(request);

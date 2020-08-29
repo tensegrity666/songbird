@@ -1,14 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
 
-import React from 'react';
+import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 
+import { getInfo } from '../../data';
 import ErrorMessage from '../error-message';
-import store from '../../store';
 import styles from './index.module.css';
 
-const InfoInner = ({ details }) => {
+import store from '../../store';
+
+const InfoInner = ({
+  details,
+  activeCategory,
+  selectedAnswer,
+  isAnswerChecked,
+}) => {
   const {
     soundPlayer,
     image,
@@ -20,16 +29,21 @@ const InfoInner = ({ details }) => {
     chooseBirdWrapper,
   } = styles;
 
-  const { isAnswerChecked } = store.getState();
+  const {
+    isContentLoading,
+    hasError,
+    audioURL,
+    rusName,
+    latinName,
+    rusDescription,
+    photo,
+  } = details;
 
-  const { audioURL, description, link, name, hasError, species } = details;
-
+  const request = useMemo(() => getInfo(activeCategory, selectedAnswer), []);
   // eslint-disable-next-line no-console
-  // console.log(details);
-  // // eslint-disable-next-line no-console
-  // console.log(store.getState());
+  console.log(request);
 
-  if (!isAnswerChecked) {
+  if (isAnswerChecked) {
     return (
       <div className={chooseBirdWrapper}>
         <p>Выберите птицу из меню слева</p>
@@ -43,25 +57,34 @@ const InfoInner = ({ details }) => {
     <div className={container}>
       <img
         className={image}
-        src={`${process.env.PUBLIC_URL}${link}`}
-        alt={name}
+        src={`${process.env.PUBLIC_URL}${photo}`}
+        alt={rusName}
         width="400"
         height="350"
       />
       <div className={cardInner}>
-        <h3 className="card-header">{name}</h3>
+        <h3 className="card-header">{rusName}</h3>
         <div className={detailsWrapper}>
           {errorMessage || (
             <>
-              <div className={`card-title ${title}`}>{species}</div>
+              <div className={`card-title ${title}`}>{latinName}</div>
               <audio className={soundPlayer} src={audioURL} controls />
             </>
           )}
-          <p className={`card-text ${paragraph}`}>{description}</p>
+          <p className={`card-text ${paragraph}`}>{rusDescription}</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default InfoInner;
+const mapStateToProps = ({
+  details,
+  activeCategory,
+  selectedAnswer,
+  isAnswerChecked,
+}) => {
+  return { details, activeCategory, selectedAnswer, isAnswerChecked };
+};
+
+export default connect(mapStateToProps)(InfoInner);

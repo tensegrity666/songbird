@@ -6,6 +6,7 @@ const {
   ANSWER_FALSE,
   HANDLE_ERROR,
   FETCH_RANDOM_SOUND,
+  FETCH_DETAILS_SOUND,
 } = actionTypes;
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -46,6 +47,19 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isContentLoading: false,
         hasError: false,
+        audioURL: payload.audioURL,
+        rusName: payload.name,
+        latinName: payload.species,
+        rusDescription: payload.description,
+        answerID: payload.id,
+        photo: payload.link,
+      };
+
+    case FETCH_DETAILS_SOUND:
+      return {
+        isContentLoading: false,
+        hasError: false,
+        isAnswerChecked: true,
         audioURL: payload.audioURL,
         rusName: payload.name,
         latinName: payload.species,
