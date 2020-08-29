@@ -8,11 +8,20 @@ import * as actions from '../../redux/actions';
 const { dispatch } = store;
 const { handleError, fetchRandomSound } = bindActionCreators(actions, dispatch);
 
-const fetchAudioData = (info) => {
+const fetchAudioData = (info, isRandom) => {
   const xenoCantoApi = new XenoCantoApi();
   const req = info.species;
 
-  xenoCantoApi
+  if (isRandom) {
+    return xenoCantoApi
+      .getData(req)
+      .then((data) => {
+        fetchRandomSound({ audioURL: data.audioURL, ...info });
+      })
+      .catch(() => handleError());
+  }
+
+  return xenoCantoApi
     .getData(req)
     .then((data) => {
       fetchRandomSound({ audioURL: data.audioURL, ...info });
