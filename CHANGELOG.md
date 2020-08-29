@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/tensegrity666/songbird/compare/v0.1.2...v0.1.3) (2020-08-29)
+
+
+### Features
+
+* add buttons actions ([f27d56a](https://github.com/tensegrity666/songbird/commit/f27d56a9d85a84832f8aae31d39322e006d1ffed))
+* add sounds and score decrease ([3df9239](https://github.com/tensegrity666/songbird/commit/3df92390f232454274180b7d055b4a43ae1c2dec))
+* implement category switcher ([092cf5b](https://github.com/tensegrity666/songbird/commit/092cf5b16add0d8873b1ae4018822521b097dab1))
+* implement score counter ([122f214](https://github.com/tensegrity666/songbird/commit/122f2146734fd8314a2a74d10945e4a19411888b))
+
+
+### Bug Fixes
+
+* add usecallback and usememo ([f378525](https://github.com/tensegrity666/songbird/commit/f378525d914d5882a5fd5c4f921f1a1da3a81427))
+* height of blocks ([1d82d4e](https://github.com/tensegrity666/songbird/commit/1d82d4e0b263598f5a50fd123c20ac214708be35))
+
 ### 0.1.2 (2020-08-25)
 
 
