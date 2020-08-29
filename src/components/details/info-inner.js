@@ -1,21 +1,14 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
 
-import React, { useMemo, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-import { getInfo } from '../../data';
-import { fetchAudioDataDetails } from '../../services/xeno-canto-api/fetch-audio';
 import ErrorMessage from '../error-message';
 import styles from './index.module.css';
 
-const InfoInner = ({
-  details,
-  activeCategory,
-  selectedAnswer,
-  isAnswerChecked,
-}) => {
+const InfoInner = (state) => {
   const {
     soundPlayer,
     image,
@@ -28,24 +21,17 @@ const InfoInner = ({
   } = styles;
 
   const {
-    hasError,
+    hasErrorInDetails,
     audioURL,
     rusName,
     latinName,
     rusDescription,
     photo,
-  } = details;
+    anchor,
+    isAnswerChecked,
+  } = state;
 
-  const request = useMemo(() => getInfo(activeCategory, selectedAnswer), [
-    activeCategory,
-    selectedAnswer,
-  ]);
-
-  useEffect(() => {
-    fetchAudioDataDetails(request, isAnswerChecked);
-  }, [request, isAnswerChecked]);
-
-  if (!isAnswerChecked || !selectedAnswer) {
+  if (!isAnswerChecked) {
     return (
       <div className={chooseBirdWrapper}>
         <p>Выберите птицу из меню слева</p>
@@ -53,7 +39,7 @@ const InfoInner = ({
     );
   }
 
-  const errorMessage = hasError ? <ErrorMessage /> : null;
+  const errorMessage = hasErrorInDetails ? <ErrorMessage /> : null;
 
   return (
     <div className={container}>
@@ -63,9 +49,14 @@ const InfoInner = ({
         alt={rusName}
         width="400"
         height="350"
+        loading="lazy"
       />
       <div className={cardInner}>
-        <h3 className="card-header">{rusName}</h3>
+        <h3 className="card-header">
+          <a href={`https:${anchor}`} target="_blank" rel="noopener noreferrer">
+            {rusName}
+          </a>
+        </h3>
         <div className={detailsWrapper}>
           {errorMessage || (
             <>
@@ -80,24 +71,16 @@ const InfoInner = ({
   );
 };
 
-const mapStateToProps = ({
-  details,
-  activeCategory,
-  selectedAnswer,
-  isAnswerChecked,
-}) => {
-  return { details, activeCategory, selectedAnswer, isAnswerChecked };
+const mapStateToProps = (state) => {
+  return state;
 };
 
-InfoInner.propTypes = {
-  details: PropTypes.object.isRequired,
-  isAnswerChecked: PropTypes.bool.isRequired,
-  activeCategory: PropTypes.number.isRequired,
-  selectedAnswer: PropTypes.number,
-};
+// InfoInner.propTypes = {
+//   state: PropTypes.object,
+// };
 
-InfoInner.defaultProps = {
-  selectedAnswer: null,
-};
+// InfoInner.defaultProps = {
+//   state: null,
+// };
 
 export default connect(mapStateToProps)(InfoInner);

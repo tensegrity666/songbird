@@ -32,7 +32,14 @@ const fetchAudioDataDetails = (info) => {
   xenoCantoApi
     .getData(req)
     .then((data) => {
-      fetchDetailsSound({ audioURL: data.audioURL, ...info });
+      fetchDetailsSound({
+        audioURL: data.audioURL,
+        anchor: data.anchor,
+        latinName: data.latinName,
+        rusName: data.rusName,
+        rusDescription: info.description,
+        photo: info.link,
+      });
     })
     .catch(() => handleErrorInDetails());
 };

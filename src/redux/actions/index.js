@@ -11,6 +11,8 @@ const {
   FETCH_DETAILS_SOUND,
   NEXT_LEVEL,
   RESTORE_ANSWERS,
+  UPDATE_RANDOM_SOUND,
+  UPDATE_SELECTED_ANSWER,
 } = actionTypes;
 
 const setAnswerTrue = (event) => {
@@ -64,9 +66,20 @@ const restoreAnswers = () => {
   };
 };
 
-const SwitchToNextLevel = () => {
+const switchToNextLevel = () => {
   restoreAnswers();
   return { type: NEXT_LEVEL };
+};
+
+const updateRandomSound = () => {
+  return { type: UPDATE_RANDOM_SOUND };
+};
+
+const updateSelectedAnswer = (payload) => {
+  return {
+    type: UPDATE_SELECTED_ANSWER,
+    payload,
+  };
 };
 
 export {
@@ -76,6 +89,8 @@ export {
   handleErrorInDetails,
   fetchRandomSound,
   fetchDetailsSound,
-  SwitchToNextLevel,
+  switchToNextLevel,
   restoreAnswers,
+  updateRandomSound,
+  updateSelectedAnswer,
 };

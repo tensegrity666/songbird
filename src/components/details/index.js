@@ -1,10 +1,6 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/no-unused-prop-types */
-/* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/media-has-caption */
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -13,23 +9,23 @@ import InfoInner from './info-inner';
 
 import styles from './index.module.css';
 
-const Details = ({ isContentLoading }) => {
+const Details = ({ isDetailsLoading }) => {
   const { infoBlock } = styles;
 
   return (
     <div
       className={`card border-secondary col-12 col-sm-12 col-md-12 col-lg-9 ${infoBlock}`}>
-      {isContentLoading ? <Spinner /> : <InfoInner />}
+      {isDetailsLoading ? <Spinner /> : <InfoInner />}
     </div>
   );
 };
 
-const mapStateToProps = ({
-  activeCategory,
-  selectedAnswer,
-  isContentLoading,
-}) => {
-  return { activeCategory, selectedAnswer, isContentLoading };
+const mapStateToProps = ({ isDetailsLoading }) => {
+  return { isDetailsLoading };
+};
+
+Details.propTypes = {
+  isDetailsLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Details);

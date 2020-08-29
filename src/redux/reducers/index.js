@@ -10,42 +10,12 @@ const {
   FETCH_DETAILS_SOUND,
   NEXT_LEVEL,
   RESTORE_ANSWERS,
+  UPDATE_RANDOM_SOUND,
+  UPDATE_SELECTED_ANSWER,
 } = actionTypes;
 
-const updateDetails = (state, { type, payload }) => {
-  switch (type) {
-    case FETCH_DETAILS_SOUND:
-      return {
-        isContentLoading: false,
-        hasError: false,
-        isAnswerChecked: true,
-        audioURL: payload.audioURL,
-        rusName: payload.name,
-        latinName: payload.species,
-        rusDescription: payload.description,
-        answerID: payload.id,
-        photo: payload.link,
-      };
-
-    case HANDLE_ERROR_IN_DETAILS:
-      return {
-        isContentLoading: false,
-        hasError: true,
-      };
-
-    default:
-      return state;
-  }
-};
-
 const reducer = (state = initialState, { type, payload }) => {
-  const {
-    score,
-    initialScorePointsPerCategory,
-    scorePointsIfWrong,
-    hasAnswer,
-    activeCategory,
-  } = state;
+  const { score, initialScorePointsPerCategory, activeCategory } = state;
 
   switch (type) {
     case ANSWER_TRUE:
@@ -53,16 +23,17 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isAnswerCorrect: true,
         isNextLevelButtonDisabled: false,
-        score: hasAnswer ? score : score + initialScorePointsPerCategory,
         hasAnswer: true,
+        score: score + initialScorePointsPerCategory,
       };
 
     case ANSWER_FALSE:
       return {
         ...state,
+        hasWrongAnswer: true,
         isAnswerCorrect: false,
-        score: hasAnswer ? score - 1 : score + scorePointsIfWrong,
         hasAnswer: true,
+        score: score - 1,
       };
 
     case HANDLE_ERROR_IN_RANDOM:
@@ -84,6 +55,8 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         hasAnswer: false,
         isAnswerCorrect: null,
+        isAnswerChecked: false,
+        score,
       };
 
     case FETCH_RANDOM_SOUND:
@@ -91,24 +64,43 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isContentLoading: false,
         hasError: false,
-        audioURL: payload.audioURL,
-        rusName: payload.name,
-        latinName: payload.species,
-        rusDescription: payload.description,
+        randomAudioURL: payload.audioURL,
+        randomRusName: payload.name,
         answerID: payload.id,
-        photo: payload.link,
+        randomPhoto: payload.link,
+      };
+
+    case UPDATE_RANDOM_SOUND:
+      return {
+        ...state,
+      };
+
+    case UPDATE_SELECTED_ANSWER:
+      return {
+        ...state,
+        isDetailsLoading: true,
+        selectedAnswer: Number(payload),
       };
 
     case HANDLE_ERROR_IN_DETAILS:
       return {
         ...state,
-        details: updateDetails(state, type),
+        isDetailsLoading: false,
+        hasError: true,
       };
 
     case FETCH_DETAILS_SOUND:
       return {
         ...state,
-        details: updateDetails(state, type),
+        isDetailsLoading: false,
+        hasError: false,
+        isAnswerChecked: true,
+        audioURL: payload.audioURL,
+        rusName: payload.rusName,
+        latinName: payload.latinName,
+        rusDescription: payload.rusDescription,
+        photo: payload.photo,
+        anchor: payload.anchor,
       };
 
     default:

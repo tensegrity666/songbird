@@ -14,15 +14,16 @@ class XenoCantoApi {
   }
 
   transformData(data) {
-    const pageResults = randomInteger(0, 9);
+    const pageResults = randomInteger(0, 3);
 
-    const { en, gen, sp, file, id } = data.recordings[pageResults];
+    const { en, gen, sp, file, id, url } = data.recordings[pageResults];
 
     return {
       questionID: id,
       rusName: en,
       latinName: `${gen} ${sp}`,
       audioURL: file,
+      anchor: url,
     };
   }
 }

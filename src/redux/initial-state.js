@@ -9,6 +9,7 @@ const initialState = {
   scorePointsIfWrong: 5,
   maximumPoints: 60,
   hasAnswer: false,
+  hasWrongAnswer: false,
 
   isPlayerWin: false,
   isGameFinished: false,
@@ -24,22 +25,20 @@ const initialState = {
   questionID: null,
   answerID: null,
 
+  randomAudioURL: null,
+  randomRusName: null,
+  randomPhoto: null,
+
   audioURL: null,
   rusName: null,
   latinName: null,
   rusDescription: null,
   photo: null,
+  anchor: null,
+  isDetailsLoading: true,
+  hasErrorInDetails: false,
 
   isNextLevelButtonDisabled: true,
-
-  details: {
-    hasError: false,
-    audioURL: null,
-    rusName: null,
-    latinName: null,
-    rusDescription: null,
-    photo: null,
-  },
 };
 
 export default initialState;

@@ -15,7 +15,7 @@ const RowWrapper = ({ isNextLevelButtonDisabled }) => {
   const { answersWrapper, button } = styles;
 
   const { dispatch } = store;
-  const { SwitchToNextLevel } = bindActionCreators(actions, dispatch);
+  const { switchToNextLevel } = bindActionCreators(actions, dispatch);
 
   return (
     <>
@@ -27,7 +27,7 @@ const RowWrapper = ({ isNextLevelButtonDisabled }) => {
         type="button"
         className={`btn btn-primary btn-lg btn-block ${button}`}
         id="nextLevel"
-        onClick={SwitchToNextLevel}
+        onClick={switchToNextLevel}
         disabled={isNextLevelButtonDisabled}>
         Следующий уровень
       </button>

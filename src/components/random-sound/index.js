@@ -26,10 +26,10 @@ const RandomSound = (state) => {
     isAnswerCorrect,
     hasError,
     isContentLoading,
-    audioURL,
-    photo,
+    randomAudioURL,
+    randomPhoto,
     answerID,
-    rusName,
+    randomRusName,
     activeCategory,
   } = state;
 
@@ -38,8 +38,8 @@ const RandomSound = (state) => {
   useEffect(() => {
     fetchAudioDataRandom(request);
     const WAIT = 'подождите загрузки компонента...';
-    console.log(`Правильный ответ: ${rusName || WAIT}`);
-  }, [rusName, request]);
+    console.log(`Правильный ответ: ${randomRusName || WAIT}`);
+  }, [randomRusName, request]);
 
   const stub = '/assets/birds-photos/small.jpg';
 
@@ -49,19 +49,20 @@ const RandomSound = (state) => {
     <>
       <img
         className={image}
-        src={isAnswerCorrect ? photo : stub}
-        alt={rusName}
+        src={isAnswerCorrect ? randomPhoto : stub}
+        alt={randomRusName}
         width="200"
         height="165"
+        loading="lazy"
       />
       <div className={`card border-success ${playerElement}`}>
         <h4 className="card-header">
-          {isAnswerCorrect ? rusName : hideName(rusName)}
+          {isAnswerCorrect ? randomRusName : hideName(randomRusName)}
         </h4>
         <div className={`card-body ${playerOuter}`}>
           <audio
             className={audioPlayer}
-            src={audioURL}
+            src={randomAudioURL}
             preload="auto"
             controls
           />
