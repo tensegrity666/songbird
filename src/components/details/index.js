@@ -3,10 +3,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import Spinner from '../spinner';
 import InfoInner from './info-inner';
-
 import styles from './index.module.css';
 
 const Details = ({ isDetailsLoading }) => {

@@ -10,6 +10,7 @@ const initialState = {
   maximumPoints: 60,
   hasAnswer: false,
   hasWrongAnswer: false,
+  randomItem: null,
 
   isPlayerWin: false,
   isGameFinished: false,
@@ -35,6 +36,7 @@ const initialState = {
   rusDescription: null,
   photo: null,
   anchor: null,
+
   isDetailsLoading: true,
   hasErrorInDetails: false,
 

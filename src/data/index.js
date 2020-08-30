@@ -61,8 +61,7 @@ const birdsData = [
     {
       id: 1,
       name: 'Грач',
-      link:
-        'https://kot-pes.com/wp-content/uploads/2016/06/image5-4-650x433.jpg',
+      link: '/assets/birds-photos/image5-4-650x433.jpg',
       species: 'Corvus frugilegus',
       description:
         'Грачи очень умные и сообразительные птицы. С помощью клюва они создают и используют простейшие орудия. У грачей развит рефлекс на звуки трактора. Услышав «тарахтение», они летят на звук – трактор пашет землю, значит, в этом месте много корма.',

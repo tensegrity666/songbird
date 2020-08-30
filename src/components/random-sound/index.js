@@ -13,12 +13,9 @@ import ErrorMessage from '../error-message';
 import PlayerContainer from './player-container';
 import { fetchAudioDataRandom } from '../../services/xeno-canto-api/fetch-audio';
 
-import { hideName, randomInteger } from '../../helpers';
+import { hideName, randomIndex } from '../../helpers';
 import styles from './index.module.css';
 import { getInfo } from '../../data';
-
-const NUMBER_OF_ANSWERS = [0, 5];
-const randomIndex = randomInteger(...NUMBER_OF_ANSWERS);
 
 const RandomSound = (state) => {
   const { playerElement, wrapper, image, audioPlayer, playerOuter } = styles;
@@ -31,9 +28,12 @@ const RandomSound = (state) => {
     answerID,
     randomRusName,
     activeCategory,
+    randomItem,
   } = state;
 
-  const request = useMemo(() => getInfo(activeCategory, randomIndex), []);
+  const req = randomItem || randomIndex();
+
+  const request = useMemo(() => getInfo(activeCategory, req), [activeCategory]);
 
   useEffect(() => {
     fetchAudioDataRandom(request);

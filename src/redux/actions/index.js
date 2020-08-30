@@ -11,8 +11,8 @@ const {
   FETCH_DETAILS_SOUND,
   NEXT_LEVEL,
   RESTORE_ANSWERS,
-  UPDATE_RANDOM_SOUND,
   UPDATE_SELECTED_ANSWER,
+  FINISH_GAME,
 } = actionTypes;
 
 const setAnswerTrue = (event) => {
@@ -66,13 +66,18 @@ const restoreAnswers = () => {
   };
 };
 
-const switchToNextLevel = () => {
+const switchToNextLevel = (payload) => {
   restoreAnswers();
-  return { type: NEXT_LEVEL };
+  return {
+    type: NEXT_LEVEL,
+    payload,
+  };
 };
 
-const updateRandomSound = () => {
-  return { type: UPDATE_RANDOM_SOUND };
+const finishGame = () => {
+  return {
+    type: FINISH_GAME,
+  };
 };
 
 const updateSelectedAnswer = (payload) => {
@@ -91,6 +96,6 @@ export {
   fetchDetailsSound,
   switchToNextLevel,
   restoreAnswers,
-  updateRandomSound,
   updateSelectedAnswer,
+  finishGame,
 };
