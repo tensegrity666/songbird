@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 
@@ -14,7 +15,12 @@ import store from '../../store';
 import * as actions from '../../redux/actions';
 import styles from './index.module.css';
 
-const Answers = ({ activeCategory, isContentLoading, selectedAnswer }) => {
+const Answers = ({
+  activeCategory,
+  isContentLoading,
+  selectedAnswer,
+  isLevelCompleted,
+}) => {
   const { answers, transparentize, button } = styles;
 
   const names = getArrayOfNames(activeCategory);
@@ -46,6 +52,10 @@ const Answers = ({ activeCategory, isContentLoading, selectedAnswer }) => {
     const randomSoundId = document.querySelector('#randomSound').dataset.random;
     const checkedAnswerId = event.target.dataset.index;
     updateSelectedAnswer(checkedAnswerId);
+
+    if (isLevelCompleted) {
+      return;
+    }
 
     if (randomSoundId === checkedAnswerId) {
       setAnswerTrue(event);
@@ -83,14 +93,24 @@ const mapStateToProps = ({
   isContentLoading,
   selectedAnswer,
   isAnswerChecked,
+  isLevelCompleted,
+  isCancelled,
 }) => {
-  return { activeCategory, isContentLoading, selectedAnswer, isAnswerChecked };
+  return {
+    activeCategory,
+    isContentLoading,
+    selectedAnswer,
+    isAnswerChecked,
+    isLevelCompleted,
+    isCancelled,
+  };
 };
 
 Answers.propTypes = {
   activeCategory: PropTypes.number.isRequired,
   selectedAnswer: PropTypes.number,
   isContentLoading: PropTypes.bool.isRequired,
+  isLevelCompleted: PropTypes.bool.isRequired,
 };
 
 Answers.defaultProps = {

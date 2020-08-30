@@ -10,8 +10,8 @@ const {
   FETCH_DETAILS_SOUND,
   NEXT_LEVEL,
   RESTORE_ANSWERS,
-  UPDATE_RANDOM_SOUND,
   UPDATE_SELECTED_ANSWER,
+  FINISH_GAME,
 } = actionTypes;
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -24,6 +24,7 @@ const reducer = (state = initialState, { type, payload }) => {
         isAnswerCorrect: true,
         isNextLevelButtonDisabled: false,
         hasAnswer: true,
+        isLevelCompleted: true,
         score: score + initialScorePointsPerCategory,
       };
 
@@ -48,6 +49,20 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         activeCategory: activeCategory + 1,
         isNextLevelButtonDisabled: true,
+        isAnswerChecked: false,
+        isAnswerCorrect: false,
+        isLevelCompleted: false,
+        isContentLoading: true,
+        hasAnswer: false,
+        randomIndex: payload,
+      };
+
+    case FINISH_GAME:
+      return {
+        score,
+        isPlayerWin: true,
+        isGameFinished: true,
+        isLevelCompleted: true,
       };
 
     case RESTORE_ANSWERS:
@@ -70,11 +85,6 @@ const reducer = (state = initialState, { type, payload }) => {
         randomPhoto: payload.link,
       };
 
-    case UPDATE_RANDOM_SOUND:
-      return {
-        ...state,
-      };
-
     case UPDATE_SELECTED_ANSWER:
       return {
         ...state,
@@ -86,14 +96,14 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isDetailsLoading: false,
-        hasError: true,
+        hasErrorInDetails: true,
       };
 
     case FETCH_DETAILS_SOUND:
       return {
         ...state,
         isDetailsLoading: false,
-        hasError: false,
+        hasErrorInDetails: false,
         isAnswerChecked: true,
         audioURL: payload.audioURL,
         rusName: payload.rusName,

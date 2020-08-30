@@ -34,7 +34,7 @@ const InfoInner = (state) => {
   if (!isAnswerChecked) {
     return (
       <div className={chooseBirdWrapper}>
-        <p>Выберите птицу из меню слева</p>
+        <p>Выберите птицу из меню</p>
       </div>
     );
   }

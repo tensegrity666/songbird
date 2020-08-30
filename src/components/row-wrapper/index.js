@@ -9,9 +9,15 @@ import * as actions from '../../redux/actions';
 import Answers from '../answers';
 import Details from '../details';
 
+import { randomIndex } from '../../helpers';
+
 import styles from './index.module.css';
 
-const RowWrapper = ({ isNextLevelButtonDisabled }) => {
+const RowWrapper = ({
+  isNextLevelButtonDisabled,
+  activeCategory,
+  isAnswerCorrect,
+}) => {
   const { answersWrapper, button } = styles;
 
   const { dispatch } = store;
@@ -27,20 +33,28 @@ const RowWrapper = ({ isNextLevelButtonDisabled }) => {
         type="button"
         className={`btn btn-primary btn-lg btn-block ${button}`}
         id="nextLevel"
-        onClick={switchToNextLevel}
+        onClick={() => switchToNextLevel(randomIndex())}
         disabled={isNextLevelButtonDisabled}>
-        Следующий уровень
+        {activeCategory >= 5 && isAnswerCorrect
+          ? 'Завершить игру'
+          : 'Следующий уровень'}
       </button>
     </>
   );
 };
 
-const mapStateToProps = ({ isNextLevelButtonDisabled }) => {
-  return { isNextLevelButtonDisabled };
+const mapStateToProps = ({
+  isNextLevelButtonDisabled,
+  activeCategory,
+  isAnswerCorrect,
+}) => {
+  return { isNextLevelButtonDisabled, activeCategory, isAnswerCorrect };
 };
 
 RowWrapper.propTypes = {
   isNextLevelButtonDisabled: PropTypes.bool.isRequired,
+  activeCategory: PropTypes.number.isRequired,
+  isAnswerCorrect: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(RowWrapper);

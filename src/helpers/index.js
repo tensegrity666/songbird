@@ -4,6 +4,9 @@ const randomInteger = (min, max) => {
   return Math.floor(rand);
 };
 
+const NUMBER_OF_ANSWERS = [0, 5];
+const randomIndex = () => randomInteger(...NUMBER_OF_ANSWERS);
+
 const hideName = (name) => {
   if (!name) {
     return '...';
@@ -11,4 +14,4 @@ const hideName = (name) => {
   return name.replace(/./gm, '⚹');
 };
 
-export { randomInteger, hideName };
+export { randomInteger, hideName, randomIndex };
