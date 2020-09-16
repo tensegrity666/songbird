@@ -1,0 +1,14 @@
+.answers {
+  min-height: 367px;
+  box-shadow: 0 15px 25px -5px #000000bf;
+}
+
+.transparentize {
+  background-color: #f0f8ff21;
+}
+
+.button {
+  width: 100%;
+  font-weight: 600;
+  text-align: start;
+}
