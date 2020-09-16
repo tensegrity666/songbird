@@ -4,7 +4,7 @@
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/tensegrity666/songbird/songbird?style=flat-square)
 
 ---
-### [Changelog](https://github.com/tensegrity666/x-check-app/blob/dev/CHANGELOG.md)
+### [Changelog](https://github.com/tensegrity666/songbird/blob/master/CHANGELOG.md)
 ---
 
 ## [SongBird](tensegrity666-songbird.netlify.app/)
