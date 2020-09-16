@@ -7,7 +7,7 @@
 ### [Changelog](https://github.com/tensegrity666/songbird/blob/master/CHANGELOG.md)
 ---
 
-## [SongBird](tensegrity666-songbird.netlify.app/)
+## [SongBird](https://tensegrity666-songbird.netlify.app/)
 Guess the bird game.
 Try to recognize the bird by its voice. In the block on the right, you can see more detailed information about the selected bird.
 
