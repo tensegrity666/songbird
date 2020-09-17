@@ -3,6 +3,9 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/tensegrity666/songbird?style=flat-square)
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/tensegrity666/songbird/songbird?style=flat-square)
 
+#### High performance in Lighthouse tests:
+
+![lighthouse](public/assets/lighthouse.jpg)
 ---
 ### [Changelog](https://github.com/tensegrity666/songbird/blob/master/CHANGELOG.md)
 ---
